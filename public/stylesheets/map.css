@@ -19,3 +19,25 @@ html, body {
   width: 32px;
   height: 32px;
   float: left; }
+
+.character {
+  background-position: -32px 0;
+  position: absolute;
+  width: 32px;
+  height: 32px; }
+
+.sprite-animate-down {
+  animation: sprite-animate-down 800ms steps(1, end) infinite;
+  -webkit-animation: sprite-animate-down 800ms steps(1, end) infinite; }
+
+.sprite-animate-left {
+  animation: sprite-animate-left 800ms steps(1, end) infinite;
+  -webkit-animation: sprite-animate-left 800ms steps(1, end) infinite; }
+
+.sprite-animate-right {
+  animation: sprite-animate-right 800ms steps(1, end) infinite;
+  -webkit-animation: sprite-animate-right 800ms steps(1, end) infinite; }
+
+.sprite-animate-up {
+  animation: sprite-animate-up 800ms steps(1, end) infinite;
+  -webkit-animation: sprite-animate-up 800ms steps(1, end) infinite; }

@@ -29,19 +29,21 @@ class tmx2html
     for layer in json.layers
       html += "<div class='layer layer-#{layer.name}' style='width: #{layerWidth}px;'>"
       if layer.data?
-        for tile, index in layer.data
-          if loc = @tileNumberToLoc(tile, json.tilesets[0])
-            newX = loc.x * 32
-            newY = loc.y * 32
-            html += "<div class='tile #{layer.name} tile-#{index} #{classNames}' style='background-position: -#{newX}px -#{newY}px;'></div>"
-          else
-            html += "<div class='tile #{layer.name} tile-#{index}'></div>"
+        unless layer.name is "Player"
+          for tile, index in layer.data
+            if loc = @tileNumberToLoc(tile, json.tilesets[0])
+              newX = loc.x * 32
+              newY = loc.y * 32
+              html += "<div class='tile #{layer.name} tile-#{index} #{classNames}' style='background-position: -#{newX}px -#{newY}px;'></div>"
+            else
+              html += "<div class='tile #{layer.name} tile-#{index}'></div>"
       html += "</div>"
 
     $(html)
 
   addTileset: (name, image) ->
     className = "tileset-#{name}"
+    image = "/tileset/" + image.substring image.lastIndexOf('/')+1
     $('#tmx2html').append ".#{className}{ background-image: url('#{image}');"
     className
 

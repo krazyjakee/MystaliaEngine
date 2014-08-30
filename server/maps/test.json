@@ -43,17 +43,254 @@
          "width":16,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":10,
+         "name":"Attributes",
+         "objects":[
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":352,
+                 "y":64
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":448,
+                 "y":160
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":64,
+                 "x":96,
+                 "y":192
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":64,
+                 "y":224
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":64,
+                 "y":32
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":384,
+                 "y":256
+                }, 
+                {
+                 "height":64,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":192,
+                 "y":192
+                }, 
+                {
+                 "height":96,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":64,
+                 "x":224,
+                 "y":64
+                }, 
+                {
+                 "height":64,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":64,
+                 "x":288,
+                 "y":64
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":320,
+                 "y":128
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":256,
+                 "y":160
+                }, 
+                {
+                 "height":128,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":64,
+                 "x":352,
+                 "y":96
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":64,
+                 "x":384,
+                 "y":32
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":96,
+                 "y":96
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":160,
+                 "y":64
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"block",
+                 "visible":true,
+                 "width":32,
+                 "x":256,
+                 "y":256
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":16,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
     {
 
     },
+ "renderorder":"right-down",
  "tileheight":32,
  "tilesets":[
         {
          "firstgid":1,
-         "image":"\/tileset\/tileset.png",
+         "image":"..\/..\/app\/image\/tileset\/tileset.png",
          "imageheight":2016,
          "imagewidth":1024,
          "margin":0,

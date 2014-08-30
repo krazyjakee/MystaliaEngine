@@ -51,6 +51,7 @@ app.use coffeem
 app.get '/', (req, res) -> res.render 'index'
 app.get '/play', (req, res) -> res.render 'play'
 app.get '/tileset/:resource', (req, res) -> res.sendFile path.resolve('app/image/tileset/' + req.params.resource)
+app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/' + req.params.resource)
 app.get '/map/:name', (req, res) -> res.sendFile path.resolve('server/maps/' + req.params.name + '.json')
 
 app.post '/register', (req, res) ->
