@@ -1,0 +1,38 @@
+doctype
+html
+  head
+    title Inviz
+    link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", rel="stylesheet")
+    link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/lumen/bootstrap.min.css", rel="stylesheet")
+    link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet")
+    link(href="stylesheets/style.css", rel="stylesheet")
+  body
+    #mainmenu.container
+      .col-sm-4.col-sm-offset-4
+        h1 Inviz
+        .panel.panel-default
+          .panel-heading
+            .panel-title Login/Register
+          .panel-body
+            form#login-form(action="/login")
+              h2.nomar-top Login
+              .form-group
+                input.form-control(placeholder="Username", name="username", type="text")
+              .form-group
+                input.form-control(placeholder="Password", name="password", type="password")
+              .form-group
+                button.btn.btn-primary.btn-block Login
+                
+            form#register-form(action="/register")
+              h2 Register
+              .form-group
+                input.form-control(placeholder="Username", name="username", type="text")
+              .form-group
+                input.form-control(placeholder="Password", name="password", type="password")
+              .form-group
+                input.form-control(placeholder="Password Confirm", name="PasswordConfirm", type="password")
+              .form-group
+                button.btn.btn-primary.btn-block Register
+
+    script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+    script(src="signup.js")

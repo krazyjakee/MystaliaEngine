@@ -1,0 +1,21 @@
+html, body {
+  padding: 0;
+  margin: 0; }
+
+.container {
+  width: 572px; }
+
+#game {
+  position: relative;
+  width: 512px;
+  height: 320px; }
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.tile {
+  width: 32px;
+  height: 32px;
+  float: left; }
