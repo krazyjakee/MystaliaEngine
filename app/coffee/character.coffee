@@ -26,12 +26,14 @@ class Character
     @element = elem
 
   animate: (direction, doDirection) ->
-    @element.addClass "sprite-animate-#{doDirection}"
     y = direction * 32
+    @element.addClass "sprite-animate-#{doDirection}"
     @element.css
       "background-position": "-32px -#{y}px"
 
   checkNextTile: (newPosition) ->
+    return false if newPosition.x < 0 or newPosition.x >= map.json.width * 32
+    return false if newPosition.y < 0 or newPosition.y >= map.json.height * 32
     id = map.locationToId(newPosition)
     attribute = map.getTileAttribute(id)
     if attribute is "block"
@@ -50,16 +52,17 @@ class Character
         # if the destination tile is not blocked
         if that.checkNextTile newPosition
           that.position = newPosition
-          that.element.animate css, 300, 'linear', ->
+          that.element.clearQueue()
+          .animate css, 300, 'linear', ->
+            that.moving = false
             # if there is a callback let it handle the animation class
             if callback
               callback(doDirection)
             else
               that.element.removeClass "sprite-animate-#{doDirection}"
-            that.moving = false
         else
-          that.moving = false
           that.element.removeClass "sprite-animate-#{doDirection}"
+          that.moving = false
 
       # depending on the direction, move the sprite, add the animation class and update the new position.
       switch direction

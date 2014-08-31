@@ -13,7 +13,10 @@ class Input
       else
         that.hero.element.removeClass "sprite-animate-#{doDirection}"
 
-    keyUp = -> that.direction = false
+    keyUp = ->
+      # classes = ("sprite-animate-"+d for d in ["up", "down", "left", "right"])
+      # that.hero.element.removeClass(classes.join(", "))
+      that.direction = false
 
     KeyboardJS.on "w", ->
       that.hero.move 3, afterMove if that.direction != 3
