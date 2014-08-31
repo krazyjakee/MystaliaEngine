@@ -1,16 +1,15 @@
 class Character
 
-  id: false
-  position: false
-  sprite: false
-  controllable: false
-  element: false
+  id: false # the unique id of the character
+  position: false # the location of the sprite
+  sprite: false # the name of the sprite
+  controllable: false # is this the hero sprite?
+  element: false # the sprite element in the dom
 
-  moving: false
-  direction: false
+  moving: false # is the sprite currently in motion?
+  direction: false # which way is it facing?
 
   constructor: (id, sprite, startPosition, controllable = "") ->
-    console.log "Creating character #{id}."
     controllable = "hero" if controllable
 
     @position = startPosition
@@ -32,26 +31,43 @@ class Character
     @element.css
       "background-position": "-32px -#{y}px"
 
+  checkNextTile: (newPosition) ->
+    id = map.locationToId(newPosition)
+    attribute = map.getTileAttribute(id)
+    if attribute is "block"
+      false
+    else
+      true
+
   move: (direction, callback = false) ->
     if @moving is false
       @moving = true
       @direction = direction
       that = @
-      doMove = (css, doDirection) ->
+      doMove = (css, doDirection, newPosition) ->
+        # begin the animation class and style
         that.animate direction, doDirection
-        that.element.animate css, 400, 'linear', ->
-          if callback
+        # if the destination tile is not blocked
+        if that.checkNextTile newPosition
+          that.position = newPosition
+          that.element.animate css, 300, 'linear', ->
+            # if there is a callback let it handle the animation class
+            if callback
+              callback(doDirection)
+            else
+              that.element.removeClass "sprite-animate-#{doDirection}"
             that.moving = false
-            callback(doDirection)
-          else
-            that.moving = false
-            that.element.removeClass "sprite-animate-#{doDirection}"
+        else
+          that.moving = false
+          that.element.removeClass "sprite-animate-#{doDirection}"
+
+      # depending on the direction, move the sprite, add the animation class and update the new position.
       switch direction
         when 0
-          doMove { top: "+=32px" }, 'down'
+          doMove { top: "+=32px" }, 'down', { x: that.position.x, y: that.position.y + 32 }
         when 1
-          doMove { left: "-=32px" }, 'left'
+          doMove { left: "-=32px" }, 'left', { x: that.position.x - 32, y: that.position.y }
         when 2
-          doMove { left: "+=32px" }, 'right'
+          doMove { left: "+=32px" }, 'right', { x: that.position.x + 32, y: that.position.y }
         when 3
-          doMove { top: "-=32px" }, 'up'
+          doMove { top: "-=32px" }, 'up', { x: that.position.x, y: that.position.y - 32 }

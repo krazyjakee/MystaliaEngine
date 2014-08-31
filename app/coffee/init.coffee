@@ -1,7 +1,7 @@
 $(window).load ->
   # Maps are made by "Tiled", see how to structure new maps on the wiki.
   # Unlike other classes, the map class is used for all maps and is not just a single instance.
-  map = new Map()
+  window.map = new Map()
 
   # Load a map first, followed by anything else map related.
   map.load 'test', ->

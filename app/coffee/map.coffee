@@ -33,11 +33,18 @@ class Map
 
   # Turn a tile location ({ x: 64, y: 0 }) into a tile id (2)
   locationToId: (location) ->
-    x = location.x / 32
-    y = location.y / 32
+    x = Math.floor(location.x / 32)
+    y = Math.floor(location.y / 32)
     w = @json.width
     id = x
 
     id += w for i in [0...y]
     id
+
+  getTileAttribute: (id) ->
+    for k, v of @attributes
+      for t in v
+        if t is id
+          return k
+    false
 
