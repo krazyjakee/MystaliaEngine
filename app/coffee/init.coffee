@@ -1,8 +1,9 @@
 $(window).load ->
-  map = new tmx2html()
-  map.load 'test', '/map/test', (json, name) ->
-    maphtml = map.render 'test'
-    $('#game').html maphtml
+  # Maps are made by "Tiled", see how to structure new maps on the wiki.
+  # Unlike other classes, the map class is used for all maps and is not just a single instance.
+  map = new Map()
 
-    ragnar = new Character('ragnar', 'ragnar', {x: 32, y: 32}, true)
-    input = new Input(ragnar)
+  # Load a map first, followed by anything else map related.
+  map.load 'test', ->
+    ragnar = new Character 'ragnar', 'ragnar', { x: 32, y: 32 }, true
+    input = new Input ragnar
