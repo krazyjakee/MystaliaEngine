@@ -272,6 +272,21 @@
                  "width":32,
                  "x":256,
                  "y":256
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+                     "Destination":"120",
+                     "Map":"temple"
+                    },
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":32,
+                 "x":288,
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -283,7 +298,10 @@
  "orientation":"orthogonal",
  "properties":
     {
-
+     "East":"test-east",
+     "North":"test-north",
+     "South":"test-south",
+     "West":"test-west"
     },
  "renderorder":"right-down",
  "tileheight":32,

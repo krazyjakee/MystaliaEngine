@@ -7,3 +7,13 @@ $(window).load ->
   map.load 'test', ->
     ragnar = new Character 'ragnar', 'ragnar', { x: 32, y: 32 }, true
     input = new Input ragnar
+
+  socket = io()
+  socket.on 'connect', ->
+    console.log 'connected'
+
+    socket.on 'ping', (res) -> console.log res
+    socket.emit 'ping'
+
+    socket.on 'disconnect', ->
+      console.log('user disconnected')

@@ -1,10 +1,12 @@
 fs = require('fs')
 express = require('express')
+app = express()
 bodyParser = require('body-parser')
 sass = require("node-sass")
 coffeem = require('coffee-middleware')
 path = require('path')
 u = require('./users')
+socket = require('./socket')
 Users = new u()
 
 allowCrossDomain = (req, res, next) ->
@@ -31,8 +33,6 @@ flushSass = ->
   console.log "CSS Cache Cleared"
   return
 flushSass()
-
-app = express()
 
 app.set 'views', 'app/views'
 app.set 'view engine', 'jade'
@@ -72,5 +72,8 @@ app.post '/login', (req, res) ->
   else
     res.send { error: "No data received" }
  
-app.listen(1337)
+server = require('http').Server(app).listen(1337)
+io = require('socket.io').listen(server)
+io.on 'connection', socket
+
 console.log('Listening on port 1337...')
