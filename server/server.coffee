@@ -5,9 +5,10 @@ bodyParser = require('body-parser')
 sass = require("node-sass")
 coffeem = require('coffee-middleware')
 path = require('path')
+GLOBAL.locallydb = require('locallydb')
 u = require('./users')
 socket = require('./socket')
-Users = new u()
+GLOBAL.Users = new u()
 
 allowCrossDomain = (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
@@ -59,7 +60,7 @@ app.post '/register', (req, res) ->
   password = req.param 'password'
   if username
     console.log username + " is attempting to register..."
-    Users.create { username: username, password: password }, (results) -> res.send results
+    res.send Users.create({ username: username, password: password })
   else
     res.send { error: "No data received" }
 
@@ -67,8 +68,8 @@ app.post '/login', (req, res) ->
   username = req.param 'username'
   password = req.param 'password'
   if username
-    console.log username + " is attempting to login..."
-    Users.login { username: username, password: password }, (results) -> res.send results
+    res.send Users.login({ username: username, password: password })
+    console.log "#{username} logged in! (#{auth})"
   else
     res.send { error: "No data received" }
  

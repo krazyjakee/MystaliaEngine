@@ -3,17 +3,20 @@ $(window).load ->
   # Unlike other classes, the map class is used for all maps and is not just a single instance.
   window.map = new Map()
 
-  # Load a map first, followed by anything else map related.
-  map.load 'test', ->
-    ragnar = new Character 'ragnar', 'ragnar', { x: 32, y: 32 }, true
-    input = new Input ragnar
-
-  socket = io()
+  window.socket = io()
   socket.on 'connect', ->
-    console.log 'connected'
-
-    socket.on 'ping', (res) -> console.log res
-    socket.emit 'ping'
+    socket.emit 'auth', window.localStorage['auth']
+    socket.on 'auth', (auth) ->
+      if auth
+        socket.emit 'changeMap', auth.map
+      else
+        location.href = "/"
+    socket.on 'changeMap', (result) ->
+      if result.map
+        # Load a map first, followed by anything else map related.
+        map.load result.map, ->
+          ragnar = new Character 'ragnar', 'ragnar', { x: result.x * 32, y: result.y * 32 }, true
+          input = new Input ragnar
 
     socket.on 'disconnect', ->
       console.log('user disconnected')

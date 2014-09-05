@@ -15,6 +15,15 @@ class Map
       that.getAttributes json
       callback(json)
 
+  changeMap: (direction) ->
+    if newMap = @json.properties[direction]
+      socket.emit 'changeMap', newMap
+    false
+
+  warpMap: (destination) ->
+    socket.emit 'changeMap', destination
+    false
+
   getAttributes: (json) ->
     attributes = {}
     objectLayer = layer for layer in json.layers when layer.type is "objectgroup"
@@ -27,7 +36,9 @@ class Map
       for i in [0...h]
         for j in [0...w]
           location = { x: x + (j * 32), y: y + (i * 32) }
-          attributes[range.type].push @locationToId location
+          attributes[range.type].push
+            id: @locationToId(location)
+            properties: range.properties
 
     @attributes = attributes
 
@@ -44,7 +55,7 @@ class Map
   getTileAttribute: (id) ->
     for k, v of @attributes
       for t in v
-        if t is id
+        if t.id is id
           return k
     false
 

@@ -1,97 +1,94 @@
 extend = require('extend')
-nStore = require('nstore')
-nStore = nStore.extend(require('nstore/query')())
 md5 = require('md5')
 
 class Users
 
+  db: new locallydb('server/data')
   users: false
+  usersX: [] # User data stored in memory.
   constructor: ->
-    @users = nStore.new 'server/data/users.db'
+
+    @users = @db.collection('users')
     console.log 'Users Initiated'
 
-  create: (userData, callback) ->
+  create: (userData) ->
     that = @
-    @validate userData, (results, userData) ->
-      if userData
-        if results
-          console.log "Already exists"
-          callback { error: "Username already registered." }
-        else
-          defaults =
-            map: 'start'
-            x: 8
-            y: 5
-            level: 1
-            hp: 10
-            mp: 10
-            xp: 0
-          extend false, userData, defaults
-          that.users.save userData.username, userData, (err) ->
-            console.log "Created user " + userData.username
-            callback { username: userData.username }
+    userData = @validate userData
+    if userData.username
+      defaults =
+        map: 'start'
+        x: 8
+        y: 5
+        level: 1
+        hp: 10
+        mp: 10
+        xp: 0
+        auth: ""
+      extend false, userData, defaults
+      @users.insert userData
+      @users.save()
+      console.log "Created user " + userData.username
+      { username: userData.username }
+    else
+      { error: userData }
+
+  login: (userData) ->
+    userData.password = md5.digest_s("wd40" + userData.password)
+    results = @find userData
+    if results
+      userData.auth = md5.digest_s(new Date('u') + userData.username)
+      @update userData.username, userData
+      { auth: userData.auth }
+    else
+      { error: "Failed to authenticate." }
+
+  find: (userData) ->
+    results = @users.where userData
+    if results
+      if results.length is 0
+        false
+      else if Object.keys(results).length
+        results
       else
-        callback { error: "Error" }
+        false
+    else
+      false
 
-  login: (userData, callback) ->
-    that = @
-    salt = "wd40"
-    password = md5.digest_s(salt + userData.password)
-    @find { username: userData.username, password: password }, (results) ->
-      if results
-        console.log userData.username + " logged in!"
-        that.getPlayerStatus userData.username, callback
-      else
-        callback { error: "Failed to authenticate." }
+  list: (callback) -> @users.items
 
-  find: (userData, callback) ->
-    @users.find userData, (err, results) ->
-      if results
-        if results.length is 0
-          callback(false)
-        else if Object.keys(results).length
-          callback(results)
-        else
-          callback(false)
-      else
-        callback(false)
+  update: (username, userData) ->
+    @users.update @users.where({ username: username })[0].cid, userData
+    @users.save()
 
-  list: (callback) ->
-    @users.all (err, results) ->
-      for r in results
-        console.log r.username
-
-  validate: (userData, callback) ->
-    if userData
-      if userData.password
-        salt = "wd40"
-        userData.password = md5.digest_s(salt+userData.password)
-        if userData.username
-          if userData.username.length > 2
-            if userData.username.length < 15
-              @find { username: userData.username }, (results) -> 
-                callback(results, userData)
+  validate: (userData) ->
+    if userData.password
+      userData.password = md5.digest_s("wd40" + userData.password)
+      if userData.username
+        if userData.username.length > 2
+          if userData.username.length < 15
+            existing = @find { username: userData.username }
+            if existing
+              "User already Exists."
             else
-              callback "Username is too long."
+              userData
           else
-            callback "Username is too short."
+            "Username is too long."
         else
-          callback "A username is required."
+          "Username is too short."
       else
-        callback "A password is required."
+        "A username is required."
+    else
+      "A password is required."
 
-  getPlayerStatus: (username, callback) ->
-    @find { username: username }, (results) ->
-      player = results[username]
-      json =
-        login: true
-        map: player.map
-        x: player.x
-        y: player.y
-        hp: player.hp
-        mp: player.mp
-        xp: player.xp
-        level: player.level
-      callback json
+  safeUserObject: (userData) ->
+    json = 
+      map: userData.map
+      x: userData.x
+      y: userData.y
+      level: userData.level
+      hp: userData.hp
+      mp: userData.mp
+      xp: userData.xp
+      cid: userData.cid
 
 module.exports = Users

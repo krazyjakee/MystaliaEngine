@@ -14,6 +14,7 @@ $(window).load ->
           $('#login-form input[name="username"]').val username
           $('#login-form input[name="password"]').val password
           $('#login-form button').click()
-        else if response.login
+        else if response.auth
+          window.localStorage['auth'] = response.auth
           location.href = "/play"
     false

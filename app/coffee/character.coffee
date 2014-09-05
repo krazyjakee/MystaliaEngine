@@ -32,12 +32,24 @@ class Character
       "background-position": "-32px -#{y}px"
 
   checkNextTile: (newPosition) ->
-    return false if newPosition.x < 0 or newPosition.x >= map.json.width * 32
-    return false if newPosition.y < 0 or newPosition.y >= map.json.height * 32
+    if newPosition.x < 0
+      return map.changeMap "West"
+    if newPosition.x >= map.json.width * 32
+      return map.changeMap "East"
+    if newPosition.y < 0
+      return map.changeMap "North"
+    if newPosition.y >= map.json.height * 32
+      return map.changeMap "South"
+
     id = map.locationToId(newPosition)
     attribute = map.getTileAttribute(id)
     if attribute is "block"
       false
+    else if attribute is "door"
+      for attribute in map.attributes["door"] when attribute.id is id
+        socket.emit 'move', newPosition
+        map.warpMap attribute.properties.Map
+        return false
     else
       true
 
@@ -51,6 +63,7 @@ class Character
         that.animate direction, doDirection
         # if the destination tile is not blocked
         if that.checkNextTile newPosition
+          socket.emit 'move', newPosition
           that.position = newPosition
           that.element.clearQueue()
           .animate css, 300, 'linear', ->
