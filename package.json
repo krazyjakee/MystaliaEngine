@@ -1,5 +1,5 @@
 {
-  "name": "Mystalia",
+  "name": "mystalia",
   "version": "0.0.1",
   "description": "2D MMORPG Engine",
   "main": "server/server.coffee",
