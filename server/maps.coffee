@@ -15,6 +15,7 @@ module.exports =
     newX = x
     newY = y
     return { x: newX, y: newY } if map is dest
+    return false unless @get(dest)
 
     if mapData = @get(map)
       mapData = eval "("+mapData+")"

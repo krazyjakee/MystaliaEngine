@@ -113,7 +113,7 @@
 
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"block",
                  "visible":true,
                  "width":32,
                  "x":128,
@@ -141,7 +141,7 @@
 
                     },
                  "rotation":0,
-                 "type":"",
+                 "type":"block",
                  "visible":true,
                  "width":32,
                  "x":256,

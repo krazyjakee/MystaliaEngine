@@ -23,12 +23,13 @@ module.exports = (socket) ->
       map = user.map
       if newLocation = Maps.hasAccessToMap(map, name, x, y)
         user.map = name
+        if user = Users.usersX[id]
+          user.x = newLocation.x
+          user.y = newLocation.y
         socket.emit 'changeMap',
           map: name
           x: newLocation.x
           y: newLocation.y
-      # Check position has access to the map
-      # Return the new player position and permission to load the next map
 
   socket.on 'move', (newLocation) ->
     id = socket.clientId
