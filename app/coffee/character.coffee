@@ -31,6 +31,10 @@ class Character
     @element.css
       "background-position": "-32px -#{y}px"
 
+  attributeProperties: (attribute, tileId) ->
+    for attribute in map.attributes[attribute] when attribute.id is tileId
+      return attribute.properties
+
   checkNextTile: (newPosition) ->
     if newPosition.x < 0
       return map.changeMap "West"
@@ -43,15 +47,18 @@ class Character
 
     id = map.locationToId(newPosition)
     attribute = map.getTileAttribute(id)
-    if attribute is "block"
-      false
-    else if attribute is "door"
-      for attribute in map.attributes["door"] when attribute.id is id
+    switch attribute
+      when "block" then return false
+      when "door"
+        properties = @attributeProperties "door", id
         socket.emit 'move', newPosition
-        map.warpMap attribute.properties.Map
+        map.warpMap properties.Map
+        return true
+      when "sign"
+        properties = @attributeProperties "sign", id
+        window.activeSign = new Sign(properties.Message, properties.Material).show() unless window.activeSign
         return false
-    else
-      true
+    true
 
   move: (direction, callback = false) ->
     if @moving is false
@@ -63,6 +70,7 @@ class Character
         that.animate direction, doDirection
         # if the destination tile is not blocked
         if that.checkNextTile newPosition
+          activeSign.hide() if activeSign
           socket.emit 'move', newPosition
           that.position = newPosition
           that.element.clearQueue()
