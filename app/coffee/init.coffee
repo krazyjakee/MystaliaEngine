@@ -30,16 +30,20 @@ $(window).load ->
       window.npcStore[result.username] = new Character result.username, 'ragnar', { x: result.x * 32, y: result.y * 32 }, false
 
     socket.on 'heroLeave', (name) ->
-      if player
-        unless name is player.name
-          npc = window.npcStore[name]
-          if npc
-            $(npc.element).fadeOut -> $(@).remove()
-            delete window.npcStore[name]
+      setTimeout ->
+        if player
+          unless name is player.name
+            npc = window.npcStore[name]
+            if npc
+              $(npc.element).fadeOut -> $(@).remove()
+              delete window.npcStore[name]
+      , 10
     socket.on 'heroJoin', (name) ->
-      if player
-        unless name is player.name
-          socket.emit 'queryHero', name
+      setTimeout ->
+        if player
+          unless name is player.name
+            socket.emit 'queryHero', name
+      , 10
 
     socket.on 'disconnect', ->
       console.log('user disconnected')

@@ -55,4 +55,7 @@ module.exports = (socket) ->
     socket.emit 'queryHero', user
 
   socket.on 'disconnect', ->
-    false
+    id = socket.id
+    user = Users.usersX[id]
+    io.to(user.map).emit 'heroLeave', user.username
+    delete Users.usersX[id]
