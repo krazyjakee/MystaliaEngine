@@ -67,7 +67,7 @@ app.post '/login', (req, res) ->
   password = req.param 'password'
   if username
     res.send Users.login({ username: username, password: password })
-    console.log "#{username} logged in! (#{auth})"
+    console.log "#{username} logged in!"
   else
     res.send { error: "No data received" }
  
