@@ -1,6 +1,8 @@
+window.player = false
+window.npcStore = []
 class Character
 
-  id: false # the unique id of the character
+  name: false # the unique id of the character
   position: false # the location of the sprite
   sprite: false # the name of the sprite
   controllable: false # is this the hero sprite?
@@ -9,15 +11,15 @@ class Character
   moving: false # is the sprite currently in motion?
   direction: false # which way is it facing?
 
-  constructor: (id, sprite, startPosition, controllable = "") ->
+  constructor: (name, sprite, startPosition, controllable = "") ->
     controllable = "hero" if controllable
 
     @position = startPosition
     @sprite = sprite
     @controllable = controllable
-    @id = id
-
-    elem = $("<div id='#{controllable}' class='character sprite-#{sprite}' data-id='#{id}'></div>").css
+    @name = name
+    $("[data-id='#{name}']").remove()
+    elem = $("<div id='#{controllable}' class='character sprite-#{sprite}' data-id='#{name}'><div class=\"character-name\">#{name}</div></div>").css
       "background-image": "url(/sprite/#{sprite}.png)"
       "left": startPosition.x
       "top": startPosition.y
@@ -59,6 +61,29 @@ class Character
         window.activeSign = new Sign(properties.Message, properties.Material).show() unless window.activeSign
         return false
     true
+
+  moveNPC: (name, x, y) ->
+    that = @
+    if @element
+      if @element.position().top / 32 > y
+        direction = 3
+        doDirection = "up"
+      if @element.position().top / 32 < y
+        direction = 0
+        doDirection = "down"
+      if @element.position().left / 32 > x
+        direction = 1
+        doDirection = "left"
+      if @element.position().left / 32 < x
+        direction = 2
+        doDirection = "right"
+      @animate direction, doDirection
+      @element.clearQueue()
+      @element.animate
+        left: x * 32
+        top: y * 32
+      , 300, 'linear', ->
+        that.element.removeClass "sprite-animate-#{doDirection}"
 
   move: (direction, callback = false) ->
     if @moving is false

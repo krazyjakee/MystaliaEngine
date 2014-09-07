@@ -74,7 +74,7 @@ app.post '/login', (req, res) ->
     res.send { error: "No data received" }
  
 server = require('http').Server(app).listen(1337)
-io = require('socket.io').listen(server)
+GLOBAL.io = require('socket.io').listen(server)
 io.on 'connection', socket
 
 console.log('Listening on port 1337...')

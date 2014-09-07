@@ -15,8 +15,31 @@ $(window).load ->
       if result.map
         # Load a map first, followed by anything else map related.
         map.load result.map, ->
-          ragnar = new Character 'ragnar', 'ragnar', { x: result.x * 32, y: result.y * 32 }, true
-          input = new Input ragnar
+          window.player = new Character result.username, 'ragnar', { x: result.x * 32, y: result.y * 32 }, true
+          input = new Input player
+
+    socket.on 'move', (result) ->
+      name = result.username
+      unless name is player.name
+        if npcStore[name]
+          npcStore[name].moveNPC result.username, result.x, result.y
+        else
+          socket.emit 'queryHero', name
+
+    socket.on 'queryHero', (result) ->
+      window.npcStore[result.username] = new Character result.username, 'ragnar', { x: result.x * 32, y: result.y * 32 }, false
+
+    socket.on 'heroLeave', (name) ->
+      if player
+        unless name is player.name
+          npc = window.npcStore[name]
+          if npc
+            $(npc.element).fadeOut -> $(@).remove()
+            delete window.npcStore[name]
+    socket.on 'heroJoin', (name) ->
+      if player
+        unless name is player.name
+          socket.emit 'queryHero', name
 
     socket.on 'disconnect', ->
       console.log('user disconnected')

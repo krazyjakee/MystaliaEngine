@@ -90,5 +90,6 @@ class Users
       mp: userData.mp
       xp: userData.xp
       cid: userData.cid
+      username: userData.username
 
 module.exports = Users
