@@ -55,7 +55,7 @@ class Character
         properties = @attributeProperties "door", id
         socket.emit 'move', newPosition
         map.warpMap properties.Map
-        return true
+        return false
       when "sign"
         properties = @attributeProperties "sign", id
         window.activeSign = new Sign(properties.Message, properties.Material).show() unless window.activeSign
