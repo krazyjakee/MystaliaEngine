@@ -28,8 +28,6 @@ flushSass = ->
       filePath = dirPath + "/" + files[i]
       if fs.statSync(filePath).isFile()
         fs.unlinkSync filePath
-      else
-        rmDir filePath
       i++
   console.log "CSS Cache Cleared"
   return
