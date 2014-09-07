@@ -6,13 +6,14 @@ module.exports = (socket) ->
     socket.emit 'ping', 'ping'
 
   socket.on 'auth', (auth) ->
-    id = socket.id
-    auth = Users.find({ auth: auth })
-    if auth = auth[0]
-      Users.usersX[id] = auth
-      socket.emit 'auth', Users.safeUserObject(auth)
-    else
-      socket.emit 'auth', false
+    if auth
+      id = socket.id
+      auth = Users.find({ auth: auth })
+      if auth = auth[0]
+        Users.usersX[id] = auth
+        socket.emit 'auth', Users.safeUserObject(auth)
+      else
+        socket.emit 'auth', false
 
 
   socket.on 'changeMap', (name) ->
