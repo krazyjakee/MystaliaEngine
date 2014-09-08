@@ -1,6 +1,9 @@
 .nomar{
   margin: 0 !important
 }
+.mar-bottom{
+  margin-bottom: 15px;
+}
 
 $animate-speed: 400ms;
 
@@ -42,4 +45,9 @@ $animate-speed: 400ms;
   &.active{
     top: 50%;
   }
+}
+
+#chat-well{
+  max-height: 100px;
+  overflow-y: scroll;
 }

@@ -60,3 +60,7 @@ module.exports = (socket) ->
     user = Users.usersX[id]
     io.to(user.map).emit 'heroLeave', user.username
     delete Users.usersX[id]
+
+  socket.on 'chat', (msg) ->
+    user = Users.usersX[socket.id]
+    io.to(user.map).emit 'chat', { username: user.username, msg: msg }

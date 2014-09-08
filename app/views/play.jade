@@ -13,7 +13,14 @@ html
         .panel-heading
           .panel-title Play
         .panel-body
-          #game
+          #game.mar-bottom
+          #chat
+            .form-group
+              .well#chat-well
+              .input-group
+                input.form-control(id="chat-input", type="text")
+                .input-group-btn
+                  button#message-btn.btn.btn-primary Send
 
     script(src="socket.io/socket.io.js")
     script(src="js/jquery-2.1.1.min.js")

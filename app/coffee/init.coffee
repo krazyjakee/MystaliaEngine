@@ -16,7 +16,7 @@ $(window).load ->
         # Load a map first, followed by anything else map related.
         map.load result.map, ->
           window.player = new Character result.username, 'ragnar', { x: result.x * 32, y: result.y * 32 }, true
-          input = new Input player
+          window.playerInput = new Input player
 
     socket.on 'move', (result) ->
       name = result.username
@@ -44,6 +44,8 @@ $(window).load ->
           unless name is player.name
             socket.emit 'queryHero', name
       , 10
+
+    socket.on 'chat', (result) -> $('#chat-well').append "#{result.username}: #{result.msg}<br />"
 
     socket.on 'disconnect', ->
       console.log('user disconnected')
