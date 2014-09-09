@@ -45,7 +45,6 @@ module.exports =
       unless status.disabled # if it's not disabled
         user.items.push item.id # add it to the user inventory
         disabledItems[status.hash] = true
-        console.log disabledItems
         i = clone(item)
         setTimeout ->
           disabledItems[status.hash] = false
