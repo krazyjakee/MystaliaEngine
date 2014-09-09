@@ -40,6 +40,9 @@
   .sign.active {
     top: 50%; }
 
+#inventory {
+  height: 145px; }
+
 #chat-well {
   height: 100px;
   max-height: 100px;

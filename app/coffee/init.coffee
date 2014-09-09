@@ -11,6 +11,7 @@ $(window).load ->
         socket.emit 'changeMap', auth.map
       else
         location.href = "/"
+
     socket.on 'changeMap', (result) ->
       if result.map
         # Load a map first, followed by anything else map related.
@@ -48,6 +49,10 @@ $(window).load ->
     socket.on 'items', (result) ->
       map.items = result
       map.placeItems()
+
+    socket.on 'removeItem', (item) -> map.removeItem item
+
+    socket.on 'addItem', (item) -> map.addItem item
 
     socket.on 'disconnect', ->
       console.log('user disconnected')

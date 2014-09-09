@@ -209,7 +209,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",
@@ -224,7 +224,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",
@@ -239,7 +239,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",
@@ -254,7 +254,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",
@@ -269,7 +269,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",
@@ -284,7 +284,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",
@@ -299,7 +299,7 @@
                  "properties":
                     {
                      "id":"0",
-                     "interval":"90000"
+                     "interval":"20000"
                     },
                  "rotation":0,
                  "type":"item",

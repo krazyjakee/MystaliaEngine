@@ -10,6 +10,8 @@ u = require('./users')
 GLOBAL.Users = new u()
 socket = require('./socket')
 
+GLOBAL.clone = (object) -> JSON.parse(JSON.stringify(object))
+
 allowCrossDomain = (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')

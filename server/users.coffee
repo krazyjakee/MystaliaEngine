@@ -24,6 +24,7 @@ class Users
         mp: 10
         xp: 0
         auth: ""
+        items: []
       extend false, userData, defaults
       @users.insert userData
       @users.save()

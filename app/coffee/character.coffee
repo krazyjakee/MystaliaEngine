@@ -85,6 +85,9 @@ class Character
       , 300, 'linear', ->
         that.element.removeClass "sprite-animate-#{doDirection}"
 
+  action: ->
+    socket.emit 'action'
+
   move: (direction, callback = false) ->
     if @moving is false
       @moving = true

@@ -14,11 +14,12 @@ class Map
       that.json = json
       $('#game').html that.tmx2html.render(id)
       that.getAttributes json
-      that.placeItems()
       callback(json)
+      that.placeItems()
 
   changeMap: (direction) ->
     if newMap = @json.properties[direction]
+      @items = false
       socket.emit 'changeMap', newMap
     false
 
@@ -71,6 +72,19 @@ class Map
           left: item.x
           top: item.y
         itemElem.prependTo('.layer-Player')
-        console.log @items.length + " items placed"
-      @items = false
 
+  removeItem: (item) ->
+    id = @locationToId item
+    $(".item-#{id}").remove()
+
+  addItem: (item) ->
+    id = @locationToId item
+    objectLayer = layer for layer in @json.layers when layer.type is "objectgroup"
+    for rawItem in objectLayer.objects when rawItem.type is "item"
+      if rawItem.x is item.x and rawItem.y is item.y
+        itemElem = $("<div class=\"tile item item-#{id}\"></div>").css
+          "background-image": "url(/other/#{item.sprite}.png)"
+          "background-position": "-#{item.offset.x}px -#{item.offset.y}px"
+          left: item.x
+          top: item.y
+        itemElem.prependTo('.layer-Player')

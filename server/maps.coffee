@@ -1,14 +1,21 @@
 fs = require('fs')
 path = require('path')
+GLOBAL.mapStore = {}
 
 module.exports =
 
   get: (name) ->
-    file = path.resolve("server/maps/#{name}.json")
-    if fs.existsSync(file)
-      fs.readFileSync file, { encoding: 'utf-8' }
+    if mapStore[name]
+      return mapStore[name]
     else
-      false
+      file = path.resolve("server/maps/#{name}.json")
+      if fs.existsSync(file)
+        mapData = fs.readFileSync file, { encoding: 'utf-8' }
+        mapData = eval "(#{mapData})"
+        mapStore[name] = mapData
+        return mapData
+      else
+        false
 
   hasAccessToMap: (map, dest, x, y) ->
     access = false
@@ -18,7 +25,6 @@ module.exports =
     return false unless @get(dest)
 
     if mapData = @get(map)
-      mapData = eval "("+mapData+")"
 
       if y is 0 and mapData.properties.North is dest
         newY = mapData.height-1
