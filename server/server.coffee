@@ -7,8 +7,8 @@ coffeem = require('coffee-middleware')
 path = require('path')
 GLOBAL.locallydb = require('locallydb')
 u = require('./users')
-socket = require('./socket')
 GLOBAL.Users = new u()
+socket = require('./socket')
 
 allowCrossDomain = (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
@@ -51,6 +51,7 @@ app.get '/', (req, res) -> res.render 'index'
 app.get '/play', (req, res) -> res.render 'play'
 app.get '/tileset/:resource', (req, res) -> res.sendFile path.resolve('app/image/tileset/' + req.params.resource)
 app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/' + req.params.resource)
+app.get '/other/:resource', (req, res) -> res.sendFile path.resolve('app/image/other/' + req.params.resource)
 app.get '/map/:name', (req, res) -> res.sendFile path.resolve('server/maps/' + req.params.name + '.json')
 
 app.post '/register', (req, res) ->
@@ -74,5 +75,7 @@ app.post '/login', (req, res) ->
 server = require('http').Server(app).listen(1337)
 GLOBAL.io = require('socket.io').listen(server)
 io.on 'connection', socket
+
+GLOBAL.Items = require('./items')
 
 console.log('Listening on port 80...')

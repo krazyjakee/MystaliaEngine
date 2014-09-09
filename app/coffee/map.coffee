@@ -3,6 +3,7 @@ class Map
   tmx2html: false
   attributes: false
   json: false
+  items: false
 
   constructor: ->
     @tmx2html = new tmx2html()
@@ -13,6 +14,7 @@ class Map
       that.json = json
       $('#game').html that.tmx2html.render(id)
       that.getAttributes json
+      that.placeItems()
       callback(json)
 
   changeMap: (direction) ->
@@ -58,4 +60,17 @@ class Map
         if t.id is id
           return k
     false
+
+  placeItems: ->
+    if @items
+      for item in @items
+        id = @locationToId item
+        itemElem = $("<div class=\"tile item item-#{id}\"></div>").css
+          "background-image": "url(/other/#{item.sprite}.png)"
+          "background-position": "-#{item.offset.x}px -#{item.offset.y}px"
+          left: item.x
+          top: item.y
+        itemElem.prependTo('.layer-Player')
+        console.log @items.length + " items placed"
+      @items = false
 

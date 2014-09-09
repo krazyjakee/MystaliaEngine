@@ -41,5 +41,6 @@
     top: 50%; }
 
 #chat-well {
+  height: 100px;
   max-height: 100px;
   overflow-y: scroll; }

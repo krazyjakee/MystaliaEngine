@@ -43,6 +43,8 @@ module.exports = (socket) ->
           if user.map is name
             socket.emit 'heroJoin', user.username
 
+        socket.emit 'items', Items.onMap(name)
+
   socket.on 'move', (newLocation) ->
     id = socket.id
     if user = Users.usersX[id]

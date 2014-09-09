@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "name": "Apple",
+      "type": "heal",
+      "value": 10,
+      "sprite": "items",
+      "offset": {
+        "x": 0,
+        "y": 5376
+      }
+    }
+  ]
+}

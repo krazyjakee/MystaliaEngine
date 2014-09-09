@@ -3,7 +3,7 @@ html, body {
   margin: 0; }
 
 .container {
-  width: 572px; }
+  width: 1084px; }
 
 #game {
   position: relative;
@@ -21,6 +21,9 @@ html, body {
   width: 32px;
   height: 32px;
   float: left; }
+
+.item {
+  position: absolute; }
 
 .character {
   background-position: -32px 0;

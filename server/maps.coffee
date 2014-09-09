@@ -44,3 +44,18 @@ module.exports =
       { x: newX, y: newY }
     else
       false
+
+  getMapList: ->
+    mapList = []
+    dirPath = "server/maps"
+    try
+      files = fs.readdirSync(dirPath)
+    catch e
+      return
+
+    if files.length > 0
+      i = 0
+      while i < files.length
+        mapList.push files[i].replace('.json','')
+
+    mapList
