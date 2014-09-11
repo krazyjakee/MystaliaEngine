@@ -10,6 +10,17 @@
         "x": 0,
         "y": 5376
       }
+    },
+    {
+      "id": 1,
+      "name": "Gem",
+      "type": "collectable",
+      "value": 1,
+      "sprite": "items",
+      "offset": {
+        "x": 0,
+        "y": 4864
+      }
     }
   ]
 }

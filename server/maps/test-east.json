@@ -454,6 +454,21 @@
                  "width":32,
                  "x":128,
                  "y":224
+                }, 
+                {
+                 "height":32,
+                 "name":"",
+                 "properties":
+                    {
+                     "id":"1",
+                     "interval":"20000"
+                    },
+                 "rotation":0,
+                 "type":"item",
+                 "visible":true,
+                 "width":32,
+                 "x":448,
+                 "y":96
                 }],
          "opacity":1,
          "type":"objectgroup",

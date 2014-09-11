@@ -5,16 +5,18 @@ extend = require('extend')
 Maps = require('./maps')
 
 GLOBAL.disabledItems = []
-GLOBAL.itemStore = []
+itemStore = []
 
 file = path.resolve("server/data/items")
 if fs.existsSync(file)
   itemst = fs.readFileSync(file, { encoding: 'utf-8' })
   itemStore = eval("(" + itemst + ")").items
 else
-  false
+  console.log "Please create an items data file."
 
 module.exports = 
+
+  itemStore: itemStore
 
   checkStatus: (x, y, mapName) ->
     itemHash = md5.digest_s(x + y + mapName)
@@ -43,12 +45,23 @@ module.exports =
       # check the status of that item
       status = Items.checkStatus(item.x, item.y, user.map)
       unless status.disabled # if it's not disabled
-        user.items.push item.id # add it to the user inventory
+        if user.items[item.id] 
+          user.items[item.id].count++ 
+        else
+          user.items[item.id] =  # add it to the user inventory
+            count: 1
+            order: 0
+            equipped: false
+
         disabledItems[status.hash] = true
         i = clone(item)
         setTimeout ->
           disabledItems[status.hash] = false
-          io.to(user.map).emit 'addItem', i
+          io.to(user.map).emit 'addMapItem', i
         , item.properties.interval
-        io.to(user.map).emit 'removeItem', i
+        io.to(user.map).emit 'removeMapItem', i
+        for itemStoreItem in itemStore when itemStoreItem.id is i.id # get the full item details from the item store
+          itemStoreItem.count = user.items[i.id].count
+          return itemStoreItem
+    return false
 

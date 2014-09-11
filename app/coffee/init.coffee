@@ -8,7 +8,8 @@ $(window).load ->
     socket.emit 'auth', window.localStorage['auth']
     socket.on 'auth', (auth) ->
       if auth
-        socket.emit 'changeMap', auth.map
+        window.inventory = new Inventory()
+        socket.emit 'changeMap', auth
       else
         location.href = "/"
 
@@ -46,13 +47,23 @@ $(window).load ->
       $('#chat-well').append "#{result.username}: #{result.msg}<br />"
       .scrollTop($('#chat-well br').length * 20)
 
-    socket.on 'items', (result) ->
+    socket.on 'mapItems', (result) ->
       map.items = result
       map.placeItems()
 
-    socket.on 'removeItem', (item) -> map.removeItem item
+    socket.on 'removeMapItem', (item) -> map.removeItem item
 
-    socket.on 'addItem', (item) -> map.addItem item
+    socket.on 'addMapItem', (item) -> map.addItem item
+
+    socket.on 'userItems', (items) -> inventory.populate items
+
+    socket.on 'addUserItem', (item) -> inventory.addItem item
 
     socket.on 'disconnect', ->
-      console.log('user disconnected')
+      setTimeout ->
+        location.href = location.href
+      , 1000
+
+
+
+

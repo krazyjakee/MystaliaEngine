@@ -11,7 +11,7 @@ module.exports = (socket) ->
       auth = Users.find({ auth: auth })
       if auth = auth[0]
         Users.usersX[id] = auth
-        socket.emit 'auth', Users.safeUserObject(auth)
+        socket.emit 'auth', auth.map
       else
         socket.emit 'auth', false
 
@@ -28,7 +28,7 @@ module.exports = (socket) ->
           user.x = newLocation.x
           user.y = newLocation.y
 
-        socket.emit 'items', Items.onMap(name)
+        socket.emit 'mapItems', Items.onMap(name)
 
         socket.emit 'changeMap',
           map: name
@@ -63,7 +63,19 @@ module.exports = (socket) ->
 
   socket.on 'action', ->
     user = Users.usersX[socket.id]
-    Items.itemAt user
+    if item = Items.itemAt(user)
+      socket.emit 'addUserItem', item
+
+  socket.on 'userItems', ->
+    user = Users.usersX[socket.id]
+    filteredItemStore = []
+    for uItem, i in user.items
+      for sItem in Items.itemStore when sItem.id is i
+        filteredItemStore.push sItem
+    socket.emit 'userItems',
+      inventory: user.items
+      itemStore: filteredItemStore
+
 
   socket.on 'disconnect', ->
     id = socket.id

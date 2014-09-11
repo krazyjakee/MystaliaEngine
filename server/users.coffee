@@ -92,5 +92,6 @@ class Users
       xp: userData.xp
       cid: userData.cid
       username: userData.username
+      items: userData.items
 
 module.exports = Users

@@ -1,3 +1,7 @@
+body{
+  font-family: consolas;
+}
+
 .nomar{
   margin: 0 !important
 }
@@ -9,19 +13,15 @@ $animate-speed: 400ms;
 
 .sprite-animate-down{
   animation: sprite-animate-down $animate-speed steps(1, end) infinite;
-  -webkit-animation: sprite-animate-down $animate-speed steps(1, end) infinite;
 }
 .sprite-animate-left{
   animation: sprite-animate-left $animate-speed steps(1, end) infinite;
-  -webkit-animation: sprite-animate-left $animate-speed steps(1, end) infinite;
 }
 .sprite-animate-right{
   animation: sprite-animate-right $animate-speed steps(1, end) infinite;
-  -webkit-animation: sprite-animate-right $animate-speed steps(1, end) infinite;
 }
 .sprite-animate-up{
   animation: sprite-animate-up $animate-speed steps(1, end) infinite;
-  -webkit-animation: sprite-animate-up $animate-speed steps(1, end) infinite;
 }
 
 .sign{
@@ -47,6 +47,32 @@ $animate-speed: 400ms;
   }
 }
 
+.inventory{
+  border-radius: 3px;
+  background-color: #ddd;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 400ms;
+  margin-right: 5px;
+  &:hover{
+    span{
+      font-size: 20px;
+    }
+  }
+  &.active{
+    box-shadow: 0px 0px 5px red;
+  }
+  span{
+    transition: font-size 400ms;
+    position: absolute;
+    top: 0;
+    right: 2px;
+    text-stroke: 0.8px black;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+  }
+}
 #inventory{
   height: 145px;
 }
