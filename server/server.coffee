@@ -73,8 +73,9 @@ app.post '/login', (req, res) ->
     console.log "#{username} logged in!"
   else
     res.send { error: "No data received" }
- 
-server = require('http').Server(app).listen(1337)
+
+config = require('./config')
+server = require('http').Server(app).listen(config.port)
 GLOBAL.io = require('socket.io').listen(server)
 io.on 'connection', socket
 
