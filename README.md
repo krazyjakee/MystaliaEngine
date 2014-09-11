@@ -6,3 +6,6 @@ MystaliaEngine
 ```
 npm install mystalia
 ```
+
+Check out the WIKI!
+https://github.com/krazyjakee/MystaliaEngine/wiki
