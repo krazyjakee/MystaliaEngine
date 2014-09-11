@@ -80,6 +80,7 @@ module.exports = (socket) ->
   socket.on 'disconnect', ->
     id = socket.id
     user = Users.usersX[socket.id]
-    io.to(user.map).emit 'heroLeave', user.username
-    Users.update(user.username, user)
-    delete Users.usersX[id]
+    if user
+      io.to(user.map).emit 'heroLeave', user.username
+      Users.update(user.username, user)
+      delete Users.usersX[id]
