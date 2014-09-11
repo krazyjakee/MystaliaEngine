@@ -23,16 +23,16 @@
   },
   "homepage": "https://github.com/krazyjakee/MystaliaEngine",
   "dependencies": {
-    "body-parser": "^1.7.0",
-    "coffee-middleware": "^0.2.1",
-    "coffee-script": "^1.8.0",
-    "express": "^4.8.8",
-    "extend": "^1.3.0",
-    "jade": "^1.6.0",
-    "locallydb": "^0.0.1",
-    "md5": "^1.0.1",
-    "node-sass": "^0.9.3",
-    "nodemon": "^1.2.1",
-    "socket.io": "^1.1.0"
+    "body-parser": "latest",
+    "coffee-middleware": "latest",
+    "coffee-script": "latest",
+    "express": "latest",
+    "extend": "latest",
+    "jade": "latest",
+    "locallydb": "latest",
+    "md5": "latest",
+    "node-sass": "latest",
+    "nodemon": "latest",
+    "socket.io": "latest"
   }
 }
