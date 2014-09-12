@@ -76,6 +76,10 @@ module.exports = (socket) ->
       inventory: user.items
       itemStore: filteredItemStore
 
+  socket.on 'shopTrade', (data) ->
+    user = Users.usersX[socket.id]
+    user.items = newItems if newItems = Items.shopTrade(data.shopId, data.tradeIndex, user)
+
 
   socket.on 'disconnect', ->
     id = socket.id

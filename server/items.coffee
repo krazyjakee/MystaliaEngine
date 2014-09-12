@@ -6,17 +6,25 @@ Maps = require('./maps')
 
 GLOBAL.disabledItems = []
 itemStore = []
+shopStore = []
 
-file = path.resolve("server/data/items")
-if fs.existsSync(file)
-  itemst = fs.readFileSync(file, { encoding: 'utf-8' })
-  itemStore = eval("(" + itemst + ")").items
+if itemStore = readDataFile 'items'
+  itemStore = itemStore.items
+  console.log "#{itemStore.length} items loaded!"
 else
-  console.log "Please create an items data file."
+  console.log "Please create/update an items data file."
+
+if shopStore = readDataFile 'shops'
+  shopStore = shopStore.shops
+  console.log "#{shopStore.length} shops loaded!"
+else
+  console.log "Please create/update a shops data file."
 
 module.exports = 
 
   itemStore: itemStore
+
+  shopStore: shopStore
 
   checkStatus: (x, y, mapName) ->
     itemHash = md5.digest_s(x + y + mapName)
@@ -45,8 +53,9 @@ module.exports =
       # check the status of that item
       status = Items.checkStatus(item.x, item.y, user.map)
       unless status.disabled # if it's not disabled
-        if user.items[item.id] 
-          user.items[item.id].count++ 
+        if user.items[item.id] # if the user has had this item before
+          if user.items[item.id].count < 999 # if the user owns less than 1000
+            user.items[item.id].count++ 
         else
           user.items[item.id] =  # add it to the user inventory
             count: 1
@@ -63,5 +72,28 @@ module.exports =
         for itemStoreItem in itemStore when itemStoreItem.id is i.id # get the full item details from the item store
           itemStoreItem.count = user.items[i.id].count
           return itemStoreItem
-    return false
+    false
+
+  shopTrade: (shopId, tradeIndex, user) ->
+    for shop in Items.shopStore when shop.id is shopId # get the shop
+      trade = shop.trades[tradeIndex] # get the trade
+      mustHaves = trade.itemIn # the required items
+      willGets = trade.itemOut # the reward items
+      for mustHave in mustHaves # loop through all required items
+        if user.items[mustHave.id] # if the user has any of this item
+          if user.items[mustHave.id].count >= mustHave.count # and it is the required amount or more
+            user.items[mustHave.id].count -= mustHave.count # remove the item from their inventory
+            for willGet in willGets # loop through all reward items
+              if user.items[willGet.id] # if the user has ever had the new item
+                user.items[willGet.id].count += willGet.count # update the count
+              else
+                user.items[willGet.id] = # else add it to the user inventory
+                  count: 1
+                  order: 0
+                  equipped: false
+          else
+            return false # if user does not have enough
+        else
+          return false # if user does not have any
+    return user.items # return the new user items
 

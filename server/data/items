@@ -21,6 +21,17 @@
         "x": 0,
         "y": 4864
       }
+    },
+    {
+      "id": 2,
+      "name": "Hot Apple Pie",
+      "type": "heal",
+      "value": 250,
+      "sprite": "items",
+      "offset": {
+        "x": 0,
+        "y": 15072
+      }
     }
   ]
 }

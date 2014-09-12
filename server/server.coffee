@@ -11,6 +11,16 @@ GLOBAL.Users = new u()
 socket = require('./socket')
 
 GLOBAL.clone = (object) -> JSON.parse(JSON.stringify(object))
+GLOBAL.readDataFile = (file) ->
+  file = path.resolve("server/data/#{file}")
+  if fs.existsSync(file)
+    rawFile = fs.readFileSync(file, { encoding: 'utf-8' })
+    if rawFile
+      eval("(" + rawFile + ")")
+    else
+      false
+  else
+    false
 
 allowCrossDomain = (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
