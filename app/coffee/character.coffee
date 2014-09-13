@@ -58,7 +58,7 @@ class Character
         return false
       when "sign"
         properties = @attributeProperties "sign", id
-        window.activeSign = new Sign(properties.Message, properties.Material).show() unless window.activeSign
+        window.activeSign = new Sign(properties.message, properties.material).show() unless window.activeSign
         return false
       when "shop"
         properties = @attributeProperties "shop", id
