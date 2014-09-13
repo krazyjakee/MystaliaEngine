@@ -97,9 +97,11 @@ class Shop
         modal.find('.modal-body').append tradeElem
         
       $(document.body).append modal
+      playerInput.freeze = true
       $("#shop-#{shop.id}").modal('show')
       .on 'hidden.bs.modal', ->
         $(@).remove()
+        playerInput.freeze = false
       .find('.btn').click ->
         socket.emit 'shopTrade',
           shopId: $(@).data('shopid')
