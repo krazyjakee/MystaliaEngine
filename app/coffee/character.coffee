@@ -60,6 +60,10 @@ class Character
         properties = @attributeProperties "sign", id
         window.activeSign = new Sign(properties.Message, properties.Material).show() unless window.activeSign
         return false
+      when "shop"
+        properties = @attributeProperties "shop", id
+        socket.emit 'shop', properties.id
+        return false
     true
 
   moveNPC: (name, x, y) ->

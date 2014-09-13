@@ -70,15 +70,23 @@ module.exports = (socket) ->
     user = Users.usersX[socket.id]
     filteredItemStore = []
     for uItem, i in user.items
-      for sItem in Items.itemStore when sItem.id is i
-        filteredItemStore.push sItem
+      if uItem.count
+        for sItem in Items.itemStore when sItem.id is i
+          filteredItemStore.push sItem
     socket.emit 'userItems',
       inventory: user.items
       itemStore: filteredItemStore
 
+  socket.on 'shop', (shopId) ->
+    user = Users.usersX[socket.id]
+    if shop = Items.shopAt(user, parseInt(shopId))
+      socket.emit 'shop', shop
+
   socket.on 'shopTrade', (data) ->
     user = Users.usersX[socket.id]
-    user.items = newItems if newItems = Items.shopTrade(data.shopId, data.tradeIndex, user)
+    if newItems = Items.shopTrade(data.shopId, data.tradeIndex, user)
+      user.items = newItems
+      socket.emit 'shopTrade'
 
 
   socket.on 'disconnect', ->

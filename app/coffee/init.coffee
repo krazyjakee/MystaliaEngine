@@ -59,6 +59,10 @@ $(window).load ->
 
     socket.on 'addUserItem', (item) -> inventory.addItem item
 
+    socket.on 'shop', (data) -> new Shop(data.shop, data.items)
+
+    socket.on 'shopTrade', -> socket.emit 'userItems'
+
     socket.on 'disconnect', ->
       setTimeout ->
         location.href = location.href

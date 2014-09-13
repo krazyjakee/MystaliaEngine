@@ -33,7 +33,7 @@ module.exports =
     else
       { disabled: false, hash: itemHash }
 
-  onMap: (mapName) ->
+  onMap: (mapName) -> # check the items on the map
     mapData = Maps.get(mapName)
     mapItems = []
     objectLayer = layer for layer in mapData.layers when layer.type is "objectgroup"
@@ -73,6 +73,22 @@ module.exports =
           itemStoreItem.count = user.items[i.id].count
           return itemStoreItem
     false
+
+  shopAt: (user, shopId) -> # the user and the id of the shop requested
+    itemSet = []
+    selectedShop = false
+    mapData = Maps.get(user.map) # check the user map for available shops
+    objectLayer = layer for layer in mapData.layers when layer.type is "objectgroup"
+    for object in objectLayer.objects when object.type is "shop"
+      if parseInt(object.properties.id) is shopId # if it has the requested id
+        for shop in Items.shopStore when shop.id is shopId # get the shop
+          selectedShop = shop # save it
+          for trade in shop.trades # loop through available shop trades
+            shopItems = trade.itemIn.concat(trade.itemOut) # merge all trade items into temp variable
+            for shopItem in shopItems # loop through
+              itemSet.push(item) for item in Items.itemStore when item.id is shopItem.id # and save the full item details
+    return { shop: selectedShop, items: itemSet }
+
 
   shopTrade: (shopId, tradeIndex, user) ->
     for shop in Items.shopStore when shop.id is shopId # get the shop

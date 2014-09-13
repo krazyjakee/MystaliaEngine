@@ -60,7 +60,7 @@ app.use coffeem
   bare: true
 
 app.get '/', (req, res) -> res.render 'index'
-app.get '/play', (req, res) -> res.render 'play'
+app.get '/:view', (req, res) -> res.render req.params.view
 app.get '/tileset/:resource', (req, res) -> res.sendFile path.resolve('app/image/tileset/' + req.params.resource)
 app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/' + req.params.resource)
 app.get '/other/:resource', (req, res) -> res.sendFile path.resolve('app/image/other/' + req.params.resource)
