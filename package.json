@@ -1,6 +1,6 @@
 {
   "name": "mystalia",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "2D MMORPG Engine",
   "main": "server/server.coffee",
   "repository": {
