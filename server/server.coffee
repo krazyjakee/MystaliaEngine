@@ -92,4 +92,4 @@ io.on 'connection', socket
 
 GLOBAL.Items = require('./items')
 
-console.log('Listening on port 80...')
+console.log "Listening on port #{config.port}..."
