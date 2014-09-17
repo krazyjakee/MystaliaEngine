@@ -65,6 +65,7 @@ app.get '/tileset/:resource', (req, res) -> res.sendFile path.resolve('app/image
 app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/' + req.params.resource)
 app.get '/other/:resource', (req, res) -> res.sendFile path.resolve('app/image/other/' + req.params.resource)
 app.get '/map/:name', (req, res) -> res.sendFile path.resolve('server/maps/' + req.params.name + '.json')
+# NEED A 404 HANDLER
 
 app.post '/register', (req, res) ->
   username = req.param 'username'

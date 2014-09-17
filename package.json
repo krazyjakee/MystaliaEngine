@@ -33,6 +33,7 @@
     "md5": "latest",
     "node-sass": "latest",
     "nodemon": "latest",
-    "socket.io": "latest"
+    "socket.io": "latest",
+    "ico": "latest"
   }
 }
