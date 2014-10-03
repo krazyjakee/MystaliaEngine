@@ -88,3 +88,7 @@ class Map
           left: item.x
           top: item.y
         itemElem.prependTo('.layer-Player')
+
+  setEffect: (name) ->
+    switch name
+      when "dark" then Effects.dark()

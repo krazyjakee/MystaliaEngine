@@ -11,6 +11,11 @@ html, body {
   width: 512px;
   height: 320px;
   background-color: black; }
+  #game[data-effect="dark"] {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%); }
 
 .layer {
   position: absolute;
@@ -42,4 +47,10 @@ html, body {
   margin-left: -50px;
   left: 50%;
   top: -20px;
+  z-index: 3; }
+
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
   z-index: 1; }

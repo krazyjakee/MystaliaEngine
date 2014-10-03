@@ -21,3 +21,24 @@ $(window).load ->
       '33%': { 'background-position': '32px 96px' }
       '66%': { 'background-position': '64px 96px' }
   ]
+
+Effects =
+
+  activeEffect: false
+
+  dark: ->
+    @activeEffect = "dark"
+    $('#game').attr 'data-effect', 'dark'
+    fl = new Flashlight
+      target: $('#game')
+      output: $('.layer-Player')
+      width: 400
+      height: 280
+      gradient: ["#888", "#aaa", "white"]
+      lights: [{x: 260, y: 180}]
+    $("[result=\"light0\"]").css
+      'left': player.position.x - 100
+      'top': player.position.y - 100
+    .attr
+      dx: player.position.x - 100
+      dy: player.position.y - 100

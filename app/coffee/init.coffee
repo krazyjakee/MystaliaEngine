@@ -19,6 +19,7 @@ $(window).load ->
         map.load result.map, ->
           window.player = new Character result.username, 'ragnar', { x: result.x * 32, y: result.y * 32 }, true
           window.playerInput = new Input player
+          map.setEffect "dark"
 
     socket.on 'move', (result) ->
       name = result.username

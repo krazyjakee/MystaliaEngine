@@ -105,6 +105,7 @@ class Character
           activeSign.hide() if activeSign
           socket.emit 'move', newPosition
           that.position = newPosition
+          that.updateEffect()
           that.element.clearQueue()
           .animate css, 300, 'linear', ->
             that.moving = false
@@ -127,3 +128,22 @@ class Character
           doMove { left: "+=32px" }, 'right', { x: that.position.x + 32, y: that.position.y }
         when 3
           doMove { top: "-=32px" }, 'up', { x: that.position.x, y: that.position.y - 32 }
+
+  updateEffect: ->
+    switch Effects.activeEffect
+      when "dark"
+        $("[result=\"light0\"]").clearQueue()
+        $("[result=\"light0\"]").animate
+          left: @position.x - 100
+        , 
+          duration: 300,
+          step: (now) ->
+            $(@).attr "dx", now
+        , 'linear'
+        $("[result=\"light0\"]").animate
+          top: @position.y - 100
+        , 
+          duration: 300,
+          step: (now) ->
+            $(@).attr "dy", now
+        , 'linear'
