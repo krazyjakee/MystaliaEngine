@@ -202,6 +202,7 @@
  "properties":
     {
      "East":"start",
+     "Indoor":"1",
      "North":"",
      "South":"",
      "West":""

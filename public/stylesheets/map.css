@@ -10,12 +10,19 @@ html, body {
   overflow: hidden;
   width: 512px;
   height: 320px;
-  background-color: black; }
+  background-color: black;
+  transition: filter 5s;
+  -webkit-transition: -webkit-filter 5s; }
   #game[data-effect="dark"] {
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
     -ms-filter: grayscale(100%); }
+  #game[data-effect="lighter"] {
+    filter: grayscale(50%);
+    -webkit-filter: grayscale(50%);
+    -moz-filter: grayscale(50%);
+    -ms-filter: grayscale(50%); }
 
 .layer {
   position: absolute;
@@ -53,4 +60,6 @@ svg {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 1; }
+  z-index: 1;
+  transition: opacity 5s;
+  -webkit-transition: opacity 5s; }

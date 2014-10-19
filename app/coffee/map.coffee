@@ -90,5 +90,11 @@ class Map
         itemElem.prependTo('.layer-Player')
 
   setEffect: (name) ->
-    switch name
-      when "dark" then Effects.dark()
+    if map.json.properties.Indoor and map.json.properties.Indoor is "1"
+      Effects.none()
+    else
+      switch name
+        when "nightTime" then Effects.dark()
+        when "eveningTime" then Effects.lighter()
+        when "dayTime" then Effects.none()
+        when "morningTime" then Effects.lighter()

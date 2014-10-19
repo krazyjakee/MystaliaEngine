@@ -16,9 +16,9 @@ class Users
     userData = @validate userData
     if userData.username
       defaults =
-        map: 'start'
-        x: 8
-        y: 5
+        map: config.startMap
+        x: config.startPosX
+        y: config.startPosY
         level: 1
         hp: 10
         mp: 10

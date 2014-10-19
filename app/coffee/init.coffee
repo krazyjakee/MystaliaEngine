@@ -19,7 +19,7 @@ $(window).load ->
         map.load result.map, ->
           window.player = new Character result.username, 'ragnar', { x: result.x * 32, y: result.y * 32 }, true
           window.playerInput = new Input player
-          map.setEffect "dark"
+          map.setEffect result.timeState
 
     socket.on 'move', (result) ->
       name = result.username
@@ -63,6 +63,8 @@ $(window).load ->
     socket.on 'shop', (data) -> new Shop(data.shop, data.items)
 
     socket.on 'shopTrade', -> socket.emit 'userItems'
+
+    socket.on 'timeState', (timeState) -> map.setEffect timeState
 
     socket.on 'disconnect', ->
       setTimeout ->

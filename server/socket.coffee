@@ -35,6 +35,7 @@ module.exports = (socket) ->
           x: newLocation.x
           y: newLocation.y
           username: user.username
+          timeState: World.gameTimeState
 
         socket.leave map
         io.to(map).emit 'heroLeave', user.username

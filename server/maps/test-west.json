@@ -319,6 +319,7 @@
  "properties":
     {
      "East":"start",
+     "Indoor":"0",
      "North":"",
      "South":"",
      "West":""
@@ -344,29 +345,6 @@
                  "tile":29
                 }],
          "tileheight":32,
-         "tiles":
-            {
-             "29":
-                {
-                 "terrain":[0, 0, 0, 0]
-                },
-             "60":
-                {
-                 "terrain":[0, 0, 0, -1]
-                },
-             "61":
-                {
-                 "terrain":[0, 0, -1, 0]
-                },
-             "92":
-                {
-                 "terrain":[0, -1, 0, 0]
-                },
-             "93":
-                {
-                 "terrain":[-1, 0, 0, 0]
-                }
-            },
          "tilewidth":32
         }],
  "tilewidth":32,

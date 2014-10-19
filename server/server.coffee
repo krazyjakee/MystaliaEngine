@@ -66,7 +66,6 @@ app.get '/tileset/:resource', (req, res) -> res.sendFile path.resolve('app/image
 app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/' + req.params.resource)
 app.get '/other/:resource', (req, res) -> res.sendFile path.resolve('app/image/other/' + req.params.resource)
 app.get '/map/:name', (req, res) -> res.sendFile path.resolve('server/maps/' + req.params.name + '.json')
-# NEED A 404 HANDLER
 
 app.post '/register', (req, res) ->
   username = req.param 'username'
@@ -86,11 +85,13 @@ app.post '/login', (req, res) ->
   else
     res.send { error: "No data received" }
 
-config = require('./config')
-server = require('http').Server(app).listen(config.port)
+GLOBAL.Config = require('./config')
+server = require('http').Server(app).listen(Config.port)
 GLOBAL.io = require('socket.io').listen(server)
 io.on 'connection', socket
 
+w = require('./world')
+GLOBAL.World = new w()
 GLOBAL.Items = require('./items')
 
-console.log "Listening on port #{config.port}..."
+console.log "Listening on port #{Config.port}..."

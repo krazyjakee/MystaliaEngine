@@ -26,8 +26,13 @@ Effects =
 
   activeEffect: false
 
+  none: ->
+    Effects.activeEffect = false
+    $('#game').attr 'data-effect', 'none'
+    $('svg').css 'opacity', 0
+
   dark: ->
-    @activeEffect = "dark"
+    Effects.activeEffect = "dark"
     $('#game').attr 'data-effect', 'dark'
     fl = new Flashlight
       target: $('#game')
@@ -42,3 +47,10 @@ Effects =
     .attr
       dx: player.position.x - 100
       dy: player.position.y - 100
+    $('svg').css 'opacity', 1
+
+  lighter: ->
+    Effects.activeEffect = "lighter"
+    Effects.dark() unless $('svg').length
+    $('#game').attr 'data-effect', 'lighter'
+    $('svg').css 'opacity', 0.5
