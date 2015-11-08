@@ -69,18 +69,18 @@ app.get '/other/:resource', (req, res) -> res.sendFile path.resolve('app/image/o
 app.get '/map/:name', (req, res) -> res.sendFile path.resolve('server/maps/' + req.params.name + '.json')
 
 app.post '/register', (req, res) ->
-  username = req.param 'username'
-  password = req.param 'password'
+  username = req.body.username
+  password = req.body.password
   if username
     console.log username + " is attempting to register..."
     res.send Users.create({ username: username, password: password })
   else
     res.send { error: "No data received" }
 
-app.post '/login', (req, res) ->
-  username = req.param 'username'
-  password = req.param 'password'
-  if username
+app.post '/login', (req, res) ->	
+  username = req.body.username
+  password = req.body.password
+ 	if username
     res.send Users.login({ username: username, password: password })
     console.log "#{username} logged in!"
   else
