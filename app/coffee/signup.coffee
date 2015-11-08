@@ -6,7 +6,7 @@ $(window).load ->
       type: 'post'
       data: $(@).serialize()
       success: (response) ->
-        if response.error 
+        if response.error
           alert response.error
         else if response.username
           username = $('#register-form input[name="username"]').val()
@@ -17,4 +17,5 @@ $(window).load ->
         else if response.auth
           window.localStorage['auth'] = response.auth
           location.href = "/play"
-    false
+					console.log(response)
+   	false
