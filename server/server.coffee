@@ -2,7 +2,7 @@ fs = require('fs')
 express = require('express')
 app = express()
 bodyParser = require('body-parser')
-sass = require("node-sass")
+sass = require("node-sass-middleware")
 coffeem = require('coffee-middleware')
 path = require('path')
 GLOBAL.locallydb = require('locallydb')
@@ -25,7 +25,8 @@ GLOBAL.readDataFile = (file) ->
 allowCrossDomain = (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization,
+Content-Length, X-Requested-With')
   if 'OPTIONS' is req.method then res.send(200) else next()
 
 flushSass = ->
@@ -49,9 +50,9 @@ app.set 'views', 'app/views'
 app.set 'view engine', 'jade'
 
 app.use allowCrossDomain
-app.use bodyParser.urlencoded()
+app.use bodyParser.urlencoded({extended: true})
 app.use express.static('public')
-app.use sass.middleware
+app.use sass
   src: 'app'
   dest: 'public'
 app.use coffeem
@@ -63,7 +64,7 @@ app.get '/', (req, res) -> res.render 'index'
 app.get '/favicon.ico', (req, res) -> res.send('Not Found.', 404)
 app.get '/:view', (req, res) -> res.render req.params.view
 app.get '/tileset/:resource', (req, res) -> res.sendFile path.resolve('app/image/tileset/' + req.params.resource)
-app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/' + req.params.resource)
+app.get '/sprite/:resource', (req, res) -> res.sendFile path.resolve('app/image/sprite/'+ req.params.resource)
 app.get '/other/:resource', (req, res) -> res.sendFile path.resolve('app/image/other/' + req.params.resource)
 app.get '/map/:name', (req, res) -> res.sendFile path.resolve('server/maps/' + req.params.name + '.json')
 
