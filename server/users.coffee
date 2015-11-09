@@ -35,7 +35,7 @@ class Users
 
   login: (userData) ->
     userData.password = md5.digest_s("wd40" + userData.password)
-    results = @find userData
+    results = @users.where userData
     if results
       userData.auth = md5.digest_s(new Date('u') + userData.username)
       @update userData.username, userData
