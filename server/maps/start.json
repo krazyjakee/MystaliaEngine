@@ -364,7 +364,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/app\/image\/tileset\/tileset.png",
+         "image":"\/tileset\/tileset.png",
          "imageheight":2016,
          "imagewidth":1024,
          "margin":0,
@@ -379,7 +379,7 @@
         }, 
         {
          "firstgid":2017,
-         "image":"..\/..\/app\/image\/tileset\/benches.png",
+         "image":"\/tileset\/benches.png",
          "imageheight":160,
          "imagewidth":192,
          "margin":0,
@@ -394,7 +394,7 @@
         }, 
         {
          "firstgid":2047,
-         "image":"..\/..\/app\/image\/tileset\/plants.png",
+         "image":"\/tileset\/plants.png",
          "imageheight":288,
          "imagewidth":416,
          "margin":0,

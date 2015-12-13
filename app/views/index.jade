@@ -15,6 +15,9 @@ html
           .row
             .col-sm-6
               #game.mar-bottom.pull-left
+              each val in [0, 1, 2, 3, 4, 5]
+                .btn.btn-primary(onclick="setmap(#{val})")=val
+
             .col-sm-6
               .console
 
@@ -22,3 +25,4 @@ html
     script(src="https://code.jquery.com/jquery-2.1.4.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.4/phaser.min.js")
     script(src="/js/init.js")
+    script(src="/js/map.js")
