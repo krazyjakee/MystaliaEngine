@@ -24,8 +24,6 @@
 	"homepage": "https://github.com/krazyjakee/MystaliaEngine",
 	"dependencies": {
 		"body-parser": "latest",
-		"coffee-middleware": "latest",
-		"coffee-script": "latest",
 		"express": "latest",
 		"extend": "latest",
 		"jade": "latest",
@@ -33,6 +31,7 @@
 		"md5": "latest",
 		"node-sass-middleware": "latest",
 		"nodemon": "latest",
-		"socket.io": "latest"
+		"socket.io": "latest",
+		"babel-middleware": "latest"
 	}
 }
