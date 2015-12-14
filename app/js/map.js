@@ -2,8 +2,9 @@
 
 class Map {
 
-	constructor(){
+	constructor(cb = false){
 		this.load('start');
+		this.callback = cb;
 	}
 
 	load(name){
@@ -34,10 +35,23 @@ class Map {
 		}
 		for(var layer of this.json.data.layers){
 			if(layer.type == "tilelayer"){
-				this.layers.push(newMap.createLayer(layer.name));
+				if(layer.name == "Player"){
+					this.playerLayer = game.add.group();
+				}
+				
+				let newLayer = newMap.createLayer(layer.name);
+				newLayer.resizeWorld();
+				this.layers.push(newLayer);
+
+				if(layer.name == "Mask"){
+					// to finish use a tilelayer for blocking instead of an object layer.
+				}
 			}
 		}
 		this.map = newMap;
+		if(this.callback){
+			this.callback();
+		}
 	}
 
 	destroy(){

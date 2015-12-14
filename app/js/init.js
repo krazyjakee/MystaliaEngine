@@ -1,30 +1,41 @@
+'use strict';
+
 var game = false,
-map = false;
+map = false,
+socket = io();
 
-var preload = function(){
-  
-}
+class Mystalia {
 
-var create = function(){
-  map = new Map();
-}
+  constructor(){
+    game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update });
 
-var update = function(){
-
-}
-
-$(window).load(function() {
-
-  game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
-
-  window.socket = io();
-  socket.on('connect', function() {
-    socket.emit('test', 'testvalue');
-    socket.on('test', function(test) {
-      log("Connected to websocket: " + new Date());
+    socket.on('connect', function() {
+      socket.emit('test', 'testvalue');
+      socket.on('test', function(test) {
+        log("Connected to websocket: " + new Date());
+      });
     });
-  });
-});
+  }
+
+  preload(){
+
+  }
+
+  create(){
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    map = new Map(function(){
+      this.hero = new Hero('ragnar');
+    }.bind(this));
+  }
+
+  update(){
+    if(this.hero){
+      game.physics.arcade.collide(this.hero.sprite, map.blockLayer);
+      this.hero.controls();
+    }
+  }
+
+}
 
 var log = function(msg){
   $('.console').append("<p>" + msg + "</p>");
@@ -35,3 +46,5 @@ var setmap = function(e){
   map.load(mapName);
   log("Loaded Map: " + mapName);
 }
+
+var system = new Mystalia();
