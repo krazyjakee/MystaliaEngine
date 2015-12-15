@@ -12,6 +12,7 @@ class Map {
 		let loader = new Phaser.Loader(game);
 		this.name = name;
 		this.layers = [];
+		this.blocks = [];
 		loader.tilemap(name, '/map/' + name, null, Phaser.Tilemap.TILED_JSON);
 		loader.onLoadComplete.addOnce(this.onJSONLoad, this);
 		loader.start();
@@ -38,13 +39,17 @@ class Map {
 				if(layer.name == "Player"){
 					this.playerLayer = game.add.group();
 				}
-				
-				let newLayer = newMap.createLayer(layer.name);
-				newLayer.resizeWorld();
-				this.layers.push(newLayer);
-
-				if(layer.name == "Mask"){
-					// to finish use a tilelayer for blocking instead of an object layer.
+				this.layers.push(newMap.createLayer(layer.name));
+			}else{
+				for(let obj of layer.objects){
+					if(obj.type == "block"){
+						let bmp = game.add.bitmapData(obj.width, obj.height);
+						// bmp.fill(255, 0, 0, 0.5)
+	    			let block = game.add.sprite(obj.x, obj.y, bmp);
+	    			game.physics.enable(block, Phaser.Physics.ARCADE);
+	    			block.body.immovable = true;
+	    			this.blocks.push(block);
+	    		}
 				}
 			}
 		}

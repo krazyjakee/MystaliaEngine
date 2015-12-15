@@ -7,7 +7,7 @@ socket = io();
 class Mystalia {
 
   constructor(){
-    game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update });
+    game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update, render: this.render });
 
     socket.on('connect', function() {
       socket.emit('test', 'testvalue');
@@ -30,9 +30,12 @@ class Mystalia {
 
   update(){
     if(this.hero){
-      game.physics.arcade.collide(this.hero.sprite, map.blockLayer);
       this.hero.controls();
     }
+  }
+
+  render(){
+
   }
 
 }
