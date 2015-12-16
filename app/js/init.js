@@ -3,6 +3,7 @@
 var game = false,
 map = false,
 hero = false,
+cursors = false,
 socket = io();
 
 class Mystalia {
@@ -23,6 +24,7 @@ class Mystalia {
   }
 
   create(){
+    cursors = game.input.keyboard.createCursorKeys();
     map = new Map();
   }
 

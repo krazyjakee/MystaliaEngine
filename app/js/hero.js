@@ -6,10 +6,10 @@ class Hero extends Character {
 
 		if(!this.sprite){ return; }
 
-		let a = game.input.keyboard.isDown(Phaser.Keyboard.A);
-		let d = game.input.keyboard.isDown(Phaser.Keyboard.D);
-		let w = game.input.keyboard.isDown(Phaser.Keyboard.W);
-		let s = game.input.keyboard.isDown(Phaser.Keyboard.S);
+		let a = game.input.keyboard.isDown(Phaser.Keyboard.A) || cursors.left.isDown;
+		let d = game.input.keyboard.isDown(Phaser.Keyboard.D) || cursors.right.isDown;
+		let w = game.input.keyboard.isDown(Phaser.Keyboard.W) || cursors.up.isDown;
+		let s = game.input.keyboard.isDown(Phaser.Keyboard.S) || cursors.down.isDown;
 
 		if(!a && !d && !w && !s){
 			this.sprite.animations.stop();
