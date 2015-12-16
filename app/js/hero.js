@@ -17,55 +17,83 @@ class Hero extends Character {
 		}
 
 		if (a) {
-			if(this.checkCollide(-2, 0)){ return; }
-      this.sprite.body.x -= 2;
       if(!w && !s){
       	this.sprite.animations.play('left');
       	this.direction = 'left';
       }
+      if(this.checkCollide(-2, 0)){ return; }
+      this.sprite.x -= 2;
     } else if (d) {
-    	if(this.checkCollide(2, 0)){ return; }
-      this.sprite.body.x += 2;
       if(!w && !s){
 	      this.sprite.animations.play('right');
 	      this.direction = 'right';
 	    }
-    } 
+      if(this.checkCollide(2, 0)){ return; }
+      this.sprite.x += 2;
+    }
 
     if (w) {
-    	if(this.checkCollide(0, -2)){ return; }
-      this.sprite.body.y -= 2;
       this.sprite.animations.play('up');
       this.direction = 'up';
+      if(this.checkCollide(0, -2)){ return; }
+      this.sprite.y -= 2;
     } else if (s) {
-    	if(this.checkCollide(0, 2)){ return; }
-      this.sprite.body.y += 2;
       this.sprite.animations.play('down');
       this.direction = 'down';
+      if(this.checkCollide(0, 2)){ return; }
+      this.sprite.y += 2;
     }
 	}
 
 	checkCollide(x, y){
-		x = this.sprite.body.x + x;
-		y = this.sprite.body.y + y;
+		x = this.sprite.x + x;
+		y = this.sprite.y + y;
+
+    let headHeight = 12;
+    let armWidth = 8;
+
+    let spriteGhost = {
+      x: x + armWidth / 2,
+      y: y + headHeight,
+      width: this.sprite.width - armWidth,
+      height: this.sprite.height - headHeight
+    }
+
+    let colDirection = this.collide(spriteGhost, { x: 0, y: 0, width: game.width - (armWidth / 2), height: game.height - headHeight });
+    if(colDirection){
+      map.next(colDirection);
+      return true;
+    }
 
 		for(let block of map.blocks){
-			let collide = this.collide({
-				x: x,
-				y: y,
-				width: this.sprite.width,
-				height: this.sprite.height
-			}, block);
-
-			if(collide){
-				return true;
+			if(!this.collide(spriteGhost, block)){
+        return map.tileAction(block);
 			}
 		}
 		return false;
 	}
 
 	collide(a, b){
-		return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.height + a.y > b.y;
+		if(a.x > b.x + b.width){
+      return "right";
+    }
+    if(a.x + a.width < b.x){
+      return "left";
+    }
+    if(a.y > b.y + b.height){
+      return "down";
+    }
+    if(a.height + a.y < b.y){
+      return "up";
+    }
+    return false;
 	}
+
+  destroy(){
+    this.sprite.destroy();
+    this.sprite = false;
+    this.name = false;
+    this.location = false;
+  }
 
 }

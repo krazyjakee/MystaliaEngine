@@ -2,15 +2,16 @@
 
 class Map {
 
-	constructor(cb = false){
-		this.load('start');
-		this.callback = cb;
+	constructor(){
+		this.load('start', { x: 288, y: 224 });
 	}
 
-	load(name){
+	load(name, startPosition = false){
+		if(!name){ return; }
 		this.destroy();
 		let loader = new Phaser.Loader(game);
 		this.name = name;
+		this.startPosition = startPosition;
 		this.layers = [];
 		this.blocks = [];
 		loader.tilemap(name, '/map/' + name, null, Phaser.Tilemap.TILED_JSON);
@@ -42,21 +43,23 @@ class Map {
 				this.layers.push(newMap.createLayer(layer.name));
 			}else{
 				for(let obj of layer.objects){
-					if(obj.type == "block"){
-						let bmp = game.add.bitmapData(obj.width, obj.height);
-						// bmp.fill(255, 0, 0, 0.5)
-	    			let block = game.add.sprite(obj.x, obj.y, bmp);
-	    			game.physics.enable(block, Phaser.Physics.ARCADE);
-	    			block.body.immovable = true;
-	    			this.blocks.push(block);
-	    		}
+					let bmp = game.add.bitmapData(obj.width, obj.height);
+					bmp.fill(255, 0, 0, 0.1)
+    			let block = game.add.sprite(obj.x, obj.y, bmp);
+    			game.physics.enable(block, Phaser.Physics.ARCADE);
+    			block.body.immovable = true;
+    			block.tileType = obj.type;
+    			block.tileProperties = obj.properties;
+    			this.blocks.push(block);
 				}
 			}
 		}
 		this.map = newMap;
-		if(this.callback){
-			this.callback();
-		}
+		this.onLoad();
+	}
+
+	onLoad(){
+		hero = new Hero('ragnar', { x: this.startPosition.x, y: this.startPosition.y });
 	}
 
 	destroy(){
@@ -69,5 +72,45 @@ class Map {
 		this.map = false;
 		this.json = false;
 		this.layers = false;
+	}
+
+	next(colDirection){
+		let mapProps = this.json.data.properties;
+		let spriteLoc = { x: hero.sprite.x, y: hero.sprite.y }
+		let newDirection = false;
+		switch(colDirection){
+			case "left":
+				newDirection = mapProps.West;
+				this.load(mapProps.West, { x: game.width - 32, y: spriteLoc.y });
+				break;
+			case "right":
+				newDirection = mapProps.East;
+				this.load(mapProps.East, { x: 0, y: spriteLoc.y });
+				break;
+			case "up":
+				newDirection = mapProps.North;
+				this.load(mapProps.North, { x: spriteLoc.x, y: game.height - 32 });
+				break;
+			case "down":
+				newDirection = mapProps.South;
+				this.load(mapProps.South, { x: spriteLoc.x, y: 0 });
+				break;
+		}
+		if(newDirection){
+			hero.destroy();
+		}
+	}
+
+	tileAction(block){
+		switch(block.tileType){
+      case "block":
+        return true;
+        break;
+      case "door":
+        hero.destroy();
+        let newLocation = block.tileProperties.Destination.split('x');
+        this.load(block.tileProperties.Map, { x: parseInt(newLocation[0]*32), y: parseInt(newLocation[1]*32) });
+        return true;
+    }
 	}
 }

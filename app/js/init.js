@@ -2,6 +2,7 @@
 
 var game = false,
 map = false,
+hero = false,
 socket = io();
 
 class Mystalia {
@@ -22,15 +23,12 @@ class Mystalia {
   }
 
   create(){
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    map = new Map(function(){
-      this.hero = new Hero('ragnar');
-    }.bind(this));
+    map = new Map();
   }
 
   update(){
-    if(this.hero){
-      this.hero.controls();
+    if(hero){
+      hero.controls();
     }
   }
 
