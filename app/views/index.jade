@@ -6,17 +6,22 @@ html
     link(href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css", rel="stylesheet")
     link(href="stylesheets/style.css", rel="stylesheet")
   body
-    #mainmenu.container
+    .container
       h1 Mystalia Engine
-      .panel.panel-default
+      #menupanel.panel.panel-default
+        .panel-heading
+          .panel-title Log in
+        .panel-body.text-center
+          input#code.form-control
+          button#register.btn.btn-primary Register
+          button#login.btn.btn-primary.hide Play
+      #gamepanel.panel.panel-default.hide
         .panel-heading
           .panel-title Start
         .panel-body
           .row
             .col-sm-6
               #game.mar-bottom.pull-left
-              each val in [0, 1, 2, 3, 4, 5]
-                .btn.btn-primary(onclick="setmap(#{val})")=val
 
             .col-sm-6
               .console

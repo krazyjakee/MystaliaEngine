@@ -54,7 +54,7 @@ class Hero extends Character {
 
     let spriteGhost = {
       x: x + armWidth / 2,
-      y: y + headHeight,
+      y: y + (headHeight - 1),
       width: this.sprite.width - armWidth,
       height: this.sprite.height - headHeight
     }

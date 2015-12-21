@@ -7,10 +7,16 @@ bodyParser = require('body-parser'),
 sass = require("node-sass-middleware"),
 babel = require('babel-middleware'),
 path = require('path'),
-locallydb = require('locallydb');
+locallydb = require('locallydb'),
+db = new locallydb('./server/data'),
+socket = require('./socket');
 
-var socket = require('./socket');
-GLOBAL.Config = require('./config');
+GLOBAL.config = require('./config');
+GLOBAL.crypto2 = require('crypto2');
+GLOBAL.users_db = db.collection('users');
+
+GLOBAL.User = require('./classes/user');
+GLOBAL.Users = require('./classes/users');
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -66,14 +72,15 @@ app.use('/js/', babel({
 }));
 
 app.get('/', (req, res) => { res.render('index') });
+app.get('/register', (req, res) => { Users.new(function(key){ res.send(key); })});
 app.get('/favicon.ico', (req, res) => { res.send('Not Found.', 404) });
 app.get('/tileset/:resource', (req, res) => { res.sendFile(path.resolve('app/image/tileset/' + req.params.resource)) });
 app.get('/sprite/:resource', (req, res) => { res.sendFile(path.resolve('app/image/sprite/' + req.params.resource)) });
 app.get('/other/:resource', (req, res) => { res.sendFile(path.resolve('app/image/other/' + req.params.resource)) });
 app.get('/map/:name', (req, res) => { res.sendFile(path.resolve('server/maps/' + req.params.name + '.json')) });
 
-var server = require('http').Server(app).listen(Config.port);
+var server = require('http').Server(app).listen(config.port);
 
 GLOBAL.io = require('socket.io').listen(server);
 io.on('connection', socket);
-console.log("Listening on port " + Config.port + "...");
+console.log("Listening on port " + config.port + "...");

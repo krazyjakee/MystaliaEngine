@@ -3,19 +3,22 @@
 var game = false,
 map = false,
 hero = false,
-cursors = false,
-socket = io();
+cursors = false;
 
 class Mystalia {
 
   constructor(){
-    game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update, render: this.render });
-
+    window.socket = io();
+    var that = this;
     socket.on('connect', function() {
-      socket.emit('test', 'testvalue');
-      socket.on('test', function(test) {
-        log("Connected to websocket: " + new Date());
-      });
+      log("Connected to websocket: " + new Date());
+
+      socket.emit('login', $('#code').val());
+      socket.on('login', function(profile){
+        this.profile = profile;
+        window.game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update, render: this.render });
+      }.bind(that));
+
     });
   }
 
@@ -26,6 +29,7 @@ class Mystalia {
   create(){
     cursors = game.input.keyboard.createCursorKeys();
     map = new Map();
+    map.load(system.profile.map, system.profile.location);
   }
 
   update(){
@@ -44,10 +48,12 @@ var log = function(msg){
   $('.console').append("<p>" + msg + "</p>");
 }
 
-var setmap = function(e){
-  var mapName = ['start', 'temple', 'test-east', 'test-north', 'test-south', 'test-west'][e];
-  map.load(mapName);
-  log("Loaded Map: " + mapName);
-}
+$('#register').click(function(){
+  $('#login').removeClass('hide');
+  $.get('/register', (res) => { $('#code').val(res); });
+});
 
-var system = new Mystalia();
+$('#login').click(function(){
+  $('#menupanel, #gamepanel').toggleClass('hide');
+  window.system = new Mystalia();
+});

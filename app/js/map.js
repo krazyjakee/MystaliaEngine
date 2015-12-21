@@ -2,10 +2,6 @@
 
 class Map {
 
-	constructor(){
-		this.load('start', { x: 288, y: 224 });
-	}
-
 	load(name, startPosition = false){
 		if(!name){ return; }
 		this.destroy();
@@ -44,7 +40,7 @@ class Map {
 			}else{
 				for(let obj of layer.objects){
 					let bmp = game.add.bitmapData(obj.width, obj.height);
-					bmp.fill(255, 0, 0, 0.1)
+					// bmp.fill(255, 0, 0, 0.1)
     			let block = game.add.sprite(obj.x, obj.y, bmp);
     			game.physics.enable(block, Phaser.Physics.ARCADE);
     			block.body.immovable = true;
@@ -59,6 +55,7 @@ class Map {
 	}
 
 	onLoad(){
+		$('.panel-title').html(this.name);
 		hero = new Hero('ragnar', { x: this.startPosition.x, y: this.startPosition.y });
 	}
 
