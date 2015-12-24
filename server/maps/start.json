@@ -278,7 +278,10 @@
                  "name":"",
                  "properties":
                     {
-                     "Destination":"9x6",
+                     "Destination": {
+                       "x": 9,
+                       "y": 6
+                     },
                      "Map":"temple"
                     },
                  "rotation":0,
