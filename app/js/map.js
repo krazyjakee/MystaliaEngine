@@ -105,8 +105,8 @@ class Map {
         break;
       case "door":
         hero.destroy();
-        let newLocation = block.tileProperties.Destination.split('x');
-        this.load(block.tileProperties.Map, { x: parseInt(newLocation[0]*32), y: parseInt(newLocation[1]*32) });
+        let newLocation = block.tileProperties.Destination;
+        this.load(block.tileProperties.Map, { x: newLocation.x, y: newLocation.y });
         return true;
     }
 	}
