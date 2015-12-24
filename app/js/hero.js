@@ -86,7 +86,7 @@ class Hero extends Character {
     if(a.height + a.y < b.y){
       return "up";
     }
-    return false;
+    return "";
 	}
 
   destroy(){
