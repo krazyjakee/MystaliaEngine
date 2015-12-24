@@ -2,7 +2,7 @@
 
 class Map {
 
-	load(name, startPosition = false){
+	load(name, startPosition){
 		if(!name){ return; }
 		this.destroy();
 		let loader = new Phaser.Loader(game);
@@ -74,7 +74,7 @@ class Map {
 	next(colDirection){
 		let mapProps = this.json.data.properties;
 		let spriteLoc = { x: hero.sprite.x, y: hero.sprite.y }
-		let newDirection = false;
+		let newDirection = "";
 		switch(colDirection){
 			case "left":
 				newDirection = mapProps.West;
