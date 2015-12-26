@@ -48,9 +48,15 @@ var log = function(msg){
   $('.console').append("<p>" + msg + "</p>");
 }
 
+var user_key = window.localStorage.getItem("user_key");
+if(user_key){
+  $('#code').val(user_key);
+  $('#login').removeClass('hide');
+}
+
 $('#register').click(function(){
   $('#login').removeClass('hide');
-  $.get('/register', (res) => { $('#code').val(res); });
+  $.get('/register', (res) => { $('#code').val(res); window.localStorage.setItem("user_key", res); });
 });
 
 $('#login').click(function(){
