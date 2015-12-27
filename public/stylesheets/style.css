@@ -1,9 +1,0 @@
-.console {
-  background-color: black;
-  color: white;
-  font-family: consolas;
-  padding: 15px 10px;
-  max-height: 400px;
-  overflow-y: scroll; }
-  .console p {
-    margin: 0; }

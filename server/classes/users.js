@@ -3,13 +3,15 @@
 class Users{
 
   constructor(){
-    var users = users_db.where("@cid >= 0");
+    let users = users_db.where("@cid >= 0");
     this.users = [];
 
     console.log('Loading ' + users.length() + ' users...');
     if(users.length()){
-      for(let user in users.items){
-        this.users.push(new User(user.key));
+      for(let user of users.items){
+        if(user.key){
+          this.users.push(new User(user.key));
+        }
       }
     }
     console.log('Done.');
@@ -20,7 +22,7 @@ class Users{
   }
 
   get(key){
-    console.log('Getting ' + key + '...')
+    console.log('Getting ' + key + '...');
     for(let user of this.users){
       if(user.key == key){
         return user;

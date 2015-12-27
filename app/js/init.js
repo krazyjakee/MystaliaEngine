@@ -15,8 +15,16 @@ class Mystalia {
 
       socket.emit('login', $('#code').val());
       socket.on('login', function(profile){
-        this.profile = profile;
-        window.game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update, render: this.render });
+        if(!this.profile){
+          if(profile){
+            log("Logged in");
+            $('#menupanel, #gamepanel').toggleClass('hide');
+            this.profile = profile;
+            window.game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update, render: this.render });
+          }else{
+            alert('Account not found!');
+          }
+        }
       }.bind(that));
 
     });
@@ -56,10 +64,13 @@ if(user_key){
 
 $('#register').click(function(){
   $('#login').removeClass('hide');
-  $.get('/register', (res) => { $('#code').val(res); window.localStorage.setItem("user_key", res); });
+  $.get('/register', (res) => {
+    $('#code').val(res);
+    $('#register').addClass('hide');
+    window.localStorage.setItem("user_key", res);
+  });
 });
 
 $('#login').click(function(){
-  $('#menupanel, #gamepanel').toggleClass('hide');
   window.system = new Mystalia();
 });

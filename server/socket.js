@@ -9,6 +9,8 @@ module.exports = function(socket) {
         let profile = login_user.profile();
         socket.emit('login', profile);
         console.log(key + ' logged in.')
+      }else{
+        socket.emit('login', false);
       }
     }
   });
