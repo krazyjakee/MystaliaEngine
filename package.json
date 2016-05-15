@@ -1,13 +1,13 @@
 {
-	"name": "mystalia",
-	"version": "0.0.4",
-	"description": "2D MMORPG Engine",
-	"main": "server/server.coffee",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/krazyjakee/MystaliaEngine.git"
-	},
-	"keywords": [
+  "name": "mystalia",
+  "version": "0.0.4",
+  "description": "2D MMORPG Engine",
+  "main": "server/server.coffee",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krazyjakee/MystaliaEngine.git"
+  },
+  "keywords": [
     "mmorpg",
     "game",
     "jquery",
@@ -16,23 +16,23 @@
     "socketio",
     "websocket"
   ],
-	"author": "krazyjakee",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/krazyjakee/MystaliaEngine/issues"
-	},
-	"homepage": "https://github.com/krazyjakee/MystaliaEngine",
-	"dependencies": {
-		"body-parser": "latest",
-		"coffee-middleware": "latest",
-		"coffee-script": "latest",
-		"express": "latest",
-		"extend": "latest",
-		"jade": "latest",
-		"locallydb": "latest",
-		"md5": "latest",
-		"node-sass-middleware": "latest",
-		"nodemon": "latest",
-		"socket.io": "latest"
-	}
+  "author": "krazyjakee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krazyjakee/MystaliaEngine/issues"
+  },
+  "homepage": "https://github.com/krazyjakee/MystaliaEngine",
+  "dependencies": {
+    "babel-middleware": "latest",
+    "body-parser": "latest",
+    "crypto2": "^0.2.3",
+    "express": "latest",
+    "extend": "latest",
+    "pug": "latest",
+    "locallydb": "latest",
+    "md5": "latest",
+    "node-sass-middleware": "latest",
+    "nodemon": "latest",
+    "socket.io": "latest"
+  }
 }

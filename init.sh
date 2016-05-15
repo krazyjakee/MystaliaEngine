@@ -1,2 +1,2 @@
 #!/bin/bash
-nodemon --watch app --watch server -e coffee,jade,scss server/server.coffee 
+nodemon --watch app --watch server -e js,pug,scss server/server.js 
