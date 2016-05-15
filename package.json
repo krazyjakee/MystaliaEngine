@@ -28,7 +28,7 @@
     "crypto2": "^0.2.3",
     "express": "latest",
     "extend": "latest",
-    "jade": "latest",
+    "pug": "latest",
     "locallydb": "latest",
     "md5": "latest",
     "node-sass-middleware": "latest",

@@ -11,12 +11,12 @@ locallydb = require('locallydb'),
 db = new locallydb('./server/data'),
 socket = require('./socket');
 
-GLOBAL.config = require('./config');
-GLOBAL.crypto2 = require('crypto2');
-GLOBAL.users_db = db.collection('users');
+global.config = require('./config');
+global.crypto2 = require('crypto2');
+global.users_db = db.collection('users');
 
-GLOBAL.User = require('./classes/user');
-GLOBAL.Users = require('./classes/users');
+global.User = require('./classes/user');
+global.Users = require('./classes/users');
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -53,7 +53,7 @@ var flushSass = function() {
 flushSass();
 
 app.set('views', path.resolve('app/views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(allowCrossDomain);
 app.use(bodyParser.urlencoded({
@@ -81,6 +81,6 @@ app.get('/map/:name', (req, res) => { res.sendFile(path.resolve('server/maps/' +
 
 var server = require('http').Server(app).listen(config.port);
 
-GLOBAL.io = require('socket.io').listen(server);
+global.io = require('socket.io').listen(server);
 io.on('connection', socket);
 console.log("Listening on port " + config.port + "...");
