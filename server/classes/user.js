@@ -1,20 +1,25 @@
 'use strict';
 
+const crypto2 = require('crypto2');
+
 class User{
 
   constructor(key, cb){
     if(!key){
       this.setDefaults();
-      crypto2.hash.sha256(config.salt + new Date(), function(err, hash){
-        this.key = hash;
-        this.save();
-        console.log("Registered new user " + hash);
-        if(cb){ cb(hash); }
-      }.bind(this));
+      this.setup(cb);
     }else{
       this.load(key);
     }
     return this;
+  }
+
+  async setup(cb) {
+    const hash = await crypto2.hash.sha256(config.salt + new Date());
+    this.key = hash;
+    this.save();
+    console.log("Registered new user " + hash);
+    if(cb){ cb(hash); }
   }
 
   setDefaults(){

@@ -3,6 +3,9 @@
   "version": "0.0.4",
   "description": "2D MMORPG Engine",
   "main": "server/server.coffee",
+  "scripts": {
+    "start": "nodemon --watch app --watch server -e js,pug,scss server/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/krazyjakee/MystaliaEngine.git"
@@ -25,7 +28,7 @@
   "dependencies": {
     "babel-middleware": "latest",
     "body-parser": "latest",
-    "crypto2": "^0.2.3",
+    "crypto2": "latest",
     "express": "latest",
     "extend": "latest",
     "pug": "latest",
