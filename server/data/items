@@ -5,33 +5,21 @@
       "name": "Apple",
       "type": "heal",
       "value": 10,
-      "sprite": "items",
-      "offset": {
-        "x": 0,
-        "y": 5376
-      }
+      "sprite": 77
     },
     {
       "id": 1,
       "name": "Gem",
       "type": "collectable",
       "value": 1,
-      "sprite": "items",
-      "offset": {
-        "x": 0,
-        "y": 4864
-      }
+      "sprite": 60
     },
     {
       "id": 2,
       "name": "Hot Apple Pie",
       "type": "heal",
       "value": 250,
-      "sprite": "items",
-      "offset": {
-        "x": 0,
-        "y": 15072
-      }
+      "sprite": 414
     }
   ]
 }

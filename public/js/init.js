@@ -37,7 +37,7 @@ class Mystalia {
 
   preload(){
     window.game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
-    window.game.scale.setUserScale(2, 2);
+    window.game.scale.setUserScale(1.5, 1.5);
     window.game.renderer.renderSession.roundPixels = true;
     Phaser.Canvas.setImageRenderingCrisp(window.game.canvas);
   }
