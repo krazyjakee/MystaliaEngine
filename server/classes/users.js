@@ -1,36 +1,28 @@
-'use strict';
+import User from './user';
 
-class Users{
-
-  constructor(){
-    let users = users_db.where("@cid >= 0");
+export default class Users {
+  constructor(db) {
+    this.db = db;
+    const users = db.where('@cid >= 0');
     this.users = [];
 
-    console.log('Loading ' + users.length() + ' users...');
-    if(users.length()){
-      for(let user of users.items){
-        if(user.key){
-          this.users.push(new User(user.key));
+    console.log(`Loading ${users.length()} users...`);
+    if (users.length()) {
+      users.items.forEach((user) => {
+        if (user.key) {
+          this.users.push(new User(user.key, null, db));
         }
-      }
+      });
     }
     console.log('Done.');
   }
 
-  new(cb){
-    this.users.push(new User(false, cb));
+  new(cb) {
+    this.users.push(new User(false, cb, this.db));
   }
 
-  get(key){
-    console.log('Getting ' + key + '...');
-    for(let user of this.users){
-      if(user.key == key){
-        return user;
-      }
-    }
-    return false;
+  get(key) {
+    console.log(`Getting ${key}...`);
+    return this.users.filter(user => user.key === key)[0] || null;
   }
-
 }
-
-module.exports = new Users();

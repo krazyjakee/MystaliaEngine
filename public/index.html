@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mystalia Engine</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mystalia Engine</h1>
+      <div id="menupanel" class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">Log in</div>
+        </div>
+        <div class="panel-body text-center">
+          <input id="code" class="form-control">
+          <button id="register" class="btn btn-primary">Register</button>
+          <button id="login" class="btn btn-primary hide">Play</button>
+        </div>
+      </div>
+      <div id="gamepanel" class="panel panel-default hide">
+        <div class="panel-heading">
+          <div class="panel-title">Start</div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div id="game" class="mar-bottom pull-left"></div>
+            </div>
+            <div class="col-sm-6">
+              <div class="console"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.4/phaser.min.js"></script>
+    <script src="/js/init.js"></script>
+    <script src="/js/map.js"></script>
+    <script src="/js/character.js"></script>
+    <script src="/js/hero.js"></script>
+  </body>
+</html>

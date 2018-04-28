@@ -4,7 +4,7 @@
   "description": "2D MMORPG Engine",
   "main": "server/server.coffee",
   "scripts": {
-    "start": "nodemon --watch app --watch server -e js,pug,scss server/server.js"
+    "start": "nodemon --watch server -e js,html,css --exec 'babel-node server/server.js'"
   },
   "repository": {
     "type": "git",
@@ -26,16 +26,23 @@
   },
   "homepage": "https://github.com/krazyjakee/MystaliaEngine",
   "dependencies": {
-    "babel-middleware": "latest",
     "body-parser": "latest",
     "crypto2": "latest",
     "express": "latest",
     "extend": "latest",
-    "pug": "latest",
     "locallydb": "latest",
     "md5": "latest",
-    "node-sass-middleware": "latest",
     "nodemon": "latest",
     "socket.io": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/node": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0"
   }
 }

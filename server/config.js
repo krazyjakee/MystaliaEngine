@@ -3,5 +3,5 @@ module.exports = {
   startMap: 'start',
   startPosX: 288,
   startPosY: 224,
-  salt: '123' // for user hash creation.
-}
+  salt: '123', // for user hash creation.
+};
