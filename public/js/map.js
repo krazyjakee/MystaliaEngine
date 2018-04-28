@@ -54,7 +54,7 @@ class Map {
   }
 
   onLoad() {
-    $('.panel-title').html(this.name);
+    $('.game-title').html(this.name);
     hero = new Hero('ragnar', { x: this.startPosition.x, y: this.startPosition.y });
   }
 

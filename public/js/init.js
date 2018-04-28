@@ -18,9 +18,14 @@ class Mystalia {
         if(!this.profile){
           if(profile){
             log("Logged in");
-            $('#menupanel, #gamepanel').toggleClass('hide');
+            $('#menupanel, #game-container').toggleClass('hide');
             this.profile = profile;
-            window.game = new Phaser.Game(32*16, 32*10, Phaser.AUTO, 'game', { preload: this.preload, create: this.create, update: this.update, render: this.render });
+            window.game = new Phaser.Game(32*16, 32*10, Phaser.CANVAS, 'game', {
+              preload: this.preload,
+              create: this.create,
+              update: this.update,
+              render: this.render
+            });
           }else{
             alert('Account not found!');
           }
@@ -31,7 +36,10 @@ class Mystalia {
   }
 
   preload(){
-
+    window.game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+    window.game.scale.setUserScale(2, 2);
+    window.game.renderer.renderSession.roundPixels = true;
+    Phaser.Canvas.setImageRenderingCrisp(window.game.canvas);
   }
 
   create(){
