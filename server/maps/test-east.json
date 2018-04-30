@@ -480,10 +480,11 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "East":"",
-     "North":"",
-     "South":"",
-     "West":"start"
+     "east":"",
+     "north":"",
+     "south":"",
+     "west":"start",
+     "name":"test-east"
     },
  "renderorder":"right-down",
  "tileheight":32,

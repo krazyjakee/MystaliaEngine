@@ -1,24 +1,33 @@
 'user strict';
 
 class Map {
-  load(name, startPosition = false) {
-    if (!name) { return; }
-    this.destroy();
-    const loader = new Phaser.Loader(game);
-    this.name = name;
-    this.startPosition = startPosition;
-    this.layers = [];
-    this.blocks = [];
-    loader.tilemap(name, `/map/${name}`, null, Phaser.Tilemap.TILED_JSON);
-    loader.onLoadComplete.addOnce(this.onJSONLoad, this);
-    loader.start();
+
+  constructor() {
+    this.onDataReceived = this.onDataReceived.bind(this);
   }
 
-  onJSONLoad() {
-    this.json = game.cache.getTilemapData(this.name);
+  load(name, startPosition) {
+    if (!name) { return; }
+    this.destroy();
+    this.name = name;
+    this.startPosition = startPosition;
 
+    const cachedData = window.game.cache.getTilemapData(this.name);
+    if (cachedData) {
+      this.json = cachedData.data;
+      requestAnimationFrame(() => this.onTilesetsLoad());
+    } else {
+      window.socket
+        .on('map', this.onDataReceived)
+        .emit('map', name);
+    }
+  }
+
+  onDataReceived(mapData) {
+    window.game.cache.addTilemap(this.name, null, mapData);
+    this.json = mapData;
     const loader = new Phaser.Loader(game);
-    for (const tileset of this.json.data.tilesets) {
+    for (const tileset of this.json.tilesets) {
       loader.image(tileset.name, tileset.image);
     }
     loader.onLoadComplete.addOnce(this.onTilesetsLoad, this);
@@ -27,10 +36,10 @@ class Map {
 
   onTilesetsLoad() {
     const newMap = game.add.tilemap(this.name);
-    for (const tileset of this.json.data.tilesets) {
+    for (const tileset of this.json.tilesets) {
 		  newMap.addTilesetImage(tileset.name);
     }
-    for (const layer of this.json.data.layers) {
+    for (const layer of this.json.layers) {
       if (layer.type == 'tilelayer') {
         if (layer.name == 'Player') {
           this.playerLayer = game.add.group();
@@ -49,12 +58,7 @@ class Map {
         }
       }
     }
-    this.map = newMap;
-    this.onLoad();
-  }
-
-  onLoad() {
-    $('.game-title').html(this.name);
+    $('.map-title').html(this.name);
     hero = new Hero('ragnar', { x: this.startPosition.x, y: this.startPosition.y });
   }
 
@@ -64,32 +68,34 @@ class Map {
         layer.destroy();
       }
     }
-    this.name = false;
-    this.map = false;
-    this.json = false;
-    this.layers = false;
+    
+    this.layers = [];
+    this.blocks = [];
+    
+    window.socket
+      .off('map', this.onDataReceived);
   }
 
   next(colDirection) {
-    const mapProps = this.json.data.properties;
+    const mapProps = this.json.properties;
     const spriteLoc = { x: hero.sprite.x, y: hero.sprite.y };
     let newDirection = false;
     switch (colDirection) {
       case 'left':
-        newDirection = mapProps.West;
-        this.load(mapProps.West, { x: game.width - 32, y: spriteLoc.y });
+        newDirection = mapProps.west;
+        this.load(mapProps.west, { x: game.width - 32, y: spriteLoc.y });
         break;
       case 'right':
-        newDirection = mapProps.East;
-        this.load(mapProps.East, { x: 0, y: spriteLoc.y });
+        newDirection = mapProps.east;
+        this.load(mapProps.east, { x: 0, y: spriteLoc.y });
         break;
       case 'up':
-        newDirection = mapProps.North;
-        this.load(mapProps.North, { x: spriteLoc.x, y: game.height - 32 });
+        newDirection = mapProps.north;
+        this.load(mapProps.north, { x: spriteLoc.x, y: game.height - 32 });
         break;
       case 'down':
-        newDirection = mapProps.South;
-        this.load(mapProps.South, { x: spriteLoc.x, y: 0 });
+        newDirection = mapProps.south;
+        this.load(mapProps.south, { x: spriteLoc.x, y: 0 });
         break;
     }
     if (newDirection) {
@@ -104,7 +110,7 @@ class Map {
         break;
       case 'door':
         hero.destroy();
-        const newLocation = block.tileProperties.Destination;
+        const newLocation = block.tileProperties.destination;
         this.load(block.tileProperties.Map, { x: newLocation.x, y: newLocation.y });
         return true;
     }

@@ -115,10 +115,11 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "East":"",
-     "North":"start",
-     "South":"",
-     "West":""
+     "east":"",
+     "north":"start",
+     "south":"",
+     "west":"",
+     "name":"test-south"
     },
  "renderorder":"right-down",
  "tileheight":32,

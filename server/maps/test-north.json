@@ -101,10 +101,11 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "East":"",
-     "North":"",
-     "South":"start",
-     "West":""
+     "east":"",
+     "north":"",
+     "south":"start",
+     "west":"",
+     "name":"test-north"
     },
  "renderorder":"right-down",
  "tileheight":32,

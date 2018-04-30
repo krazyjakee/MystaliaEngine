@@ -9,28 +9,28 @@ class Mystalia {
 
   constructor(){
     window.socket = io();
-    var that = this;
-    socket.on('connect', function() {
+    socket.on('connect', () => {
       log("Connected to websocket: " + new Date());
 
       socket.emit('login', $('#code').val());
-      socket.on('login', function(profile){
-        if(!this.profile){
-          if(profile){
-            log("Logged in");
-            $('#menupanel, #game-container').toggleClass('hide');
-            this.profile = profile;
-            window.game = new Phaser.Game(32*16, 32*10, Phaser.CANVAS, 'game', {
-              preload: this.preload,
-              create: this.create,
-              update: this.update,
-              render: this.render
-            });
-          }else{
-            alert('Account not found!');
+      socket
+        .on('login', (profile) => {
+          if(!this.profile){
+            if(profile){
+              log("Logged in");
+              $('#menupanel, #game-container').toggleClass('hide');
+              this.profile = profile;
+              window.game = new Phaser.Game(32*16, 32*10, Phaser.CANVAS, 'game', {
+                preload: this.preload,
+                create: this.create,
+                update: this.update,
+                render: this.render
+              });
+            }else{
+              alert('Account not found!');
+            }
           }
-        }
-      }.bind(that));
+        });
 
     });
   }

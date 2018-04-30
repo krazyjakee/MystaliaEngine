@@ -30,6 +30,7 @@
     "crypto2": "latest",
     "express": "latest",
     "extend": "latest",
+    "fs-extra": "^5.0.0",
     "locallydb": "latest",
     "md5": "latest",
     "nodemon": "latest",

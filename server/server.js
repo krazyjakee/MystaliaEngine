@@ -1,16 +1,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import path from 'path';
-import LocallyDb from 'locallydb';
+import http from 'http';
+import socketIo from 'socket.io';
 import config from './config';
 import socket from './socket';
 import Users from './classes/users';
+import Maps from './classes/maps';
 
 const app = express();
-const db = new LocallyDb('./server/data');
-const usersDb = db.collection('users');
-
-const users = new Users(usersDb);
+const users = new Users();
+const maps = new Maps();
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -29,14 +28,21 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => { res.sendFile('index.html3'); });
+app.get('/', (req, res) => { res.sendFile('index.html'); });
 app.get('/register', (req, res) => { users.new((key) => { res.send(key); }); });
 app.get('/favicon.ico', (req, res) => { res.send('Not Found.', 404); });
-app.get('/map/:name', (req, res) => { res.sendFile(path.resolve(`server/maps/${req.params.name}.json`)); });
 
-const server = require('http').Server(app).listen(config.port);
+const init = async () => {
+  await maps.initiate();
+  const server = http.Server(app).listen(config.port);
+  const io = socketIo.listen(server);
 
-const io = require('socket.io').listen(server);
+  io.on('connection', socket({
+    users,
+    maps,
+  }));
 
-io.on('connection', socket(users));
-console.log(`Listening on port ${config.port}...`);
+  console.log(`Listening on port ${config.port}...`);
+};
+
+init();
