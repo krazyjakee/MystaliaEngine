@@ -11,8 +11,6 @@ class Mystalia {
     window.socket = io();
     socket.on('connect', () => {
       log("Connected to websocket: " + new Date());
-
-      socket.emit('login', $('#code').val());
       socket
         .on('login', (profile) => {
           if(!this.profile){
@@ -30,7 +28,12 @@ class Mystalia {
               alert('Account not found!');
             }
           }
-        });
+        })
+        .on('items', items => {
+          window.gameItems = items;
+        })
+        .emit('items')
+        .emit('login', $('#code').val());
 
     });
   }
@@ -64,7 +67,7 @@ var log = function(msg){
   $('.console').append("<p>" + msg + "</p>");
 }
 
-var user_key = window.localStorage.getItem("user_key");
+var user_key = localStorage.getItem("userkey");
 if(user_key){
   $('#code').val(user_key);
   $('#login').removeClass('hide');
@@ -75,7 +78,7 @@ $('#register').click(function(){
   $.get('/register', (res) => {
     $('#code').val(res);
     $('#register').addClass('hide');
-    window.localStorage.setItem("user_key", res);
+    localStorage.setItem("userkey", res);
   });
 });
 

@@ -7,14 +7,15 @@ export default class Maps {
     this.maps = [];
   }
 
-  async initiate() {
+  async initiate(io) {
     const files = await fs.readdir(path.resolve('./server/maps'));
     files.forEach((file) => {
       this.maps.push(new GameMap(file));
     });
 
-    await Promise.all(this.maps.map(m => m.initiate()));
+    await Promise.all(this.maps.map(m => m.initiate(io)));
     console.log(`Loaded ${this.maps.length} maps.`);
+
     return true;
   }
 

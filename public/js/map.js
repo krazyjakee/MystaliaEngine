@@ -4,6 +4,7 @@ class Map {
 
   constructor() {
     this.onDataReceived = this.onDataReceived.bind(this);
+    this.onRoomDataReceived = this.onRoomDataReceived.bind(this);
   }
 
   load(name, startPosition) {
@@ -12,7 +13,7 @@ class Map {
     this.name = name;
     this.startPosition = startPosition;
 
-    const cachedData = window.game.cache.getTilemapData(this.name);
+    const cachedData = window.game.cache.getTilemapData(name);
     if (cachedData) {
       this.json = cachedData.data;
       requestAnimationFrame(() => this.onTilesetsLoad());
@@ -42,6 +43,7 @@ class Map {
     for (const layer of this.json.layers) {
       if (layer.type == 'tilelayer') {
         if (layer.name == 'Player') {
+          this.itemLayer = game.add.group();
           this.playerLayer = game.add.group();
         }
         this.layers.push(newMap.createLayer(layer.name));
@@ -60,6 +62,11 @@ class Map {
     }
     $('.map-title').html(this.name);
     hero = new Hero('ragnar', { x: this.startPosition.x, y: this.startPosition.y });
+
+    this.room = io('/map/' + this.name);
+    this.room
+      .on('mapData', this.onRoomDataReceived)
+      .on('item', this.updateItem);
   }
 
   destroy() {
@@ -68,12 +75,20 @@ class Map {
         layer.destroy();
       }
     }
-    
+    if (this.itemLayer) {
+      this.itemLayer.destroy();
+    }
+
     this.layers = [];
     this.blocks = [];
+    this.items = [];
     
     window.socket
-      .off('map', this.onDataReceived);
+    .off('map', this.onDataReceived)
+    if (this.room) { 
+      this.room
+        .off('mapData', this.onRoomDataReceived);
+    }
   }
 
   next(colDirection) {
@@ -114,5 +129,13 @@ class Map {
         this.load(block.tileProperties.Map, { x: newLocation.x, y: newLocation.y });
         return true;
     }
+  }
+
+  onRoomDataReceived(data) {
+    this.items = data.items.map(d => new Item(d));
+  }
+
+  updateItem(data) {
+    console.log(data);
   }
 }
