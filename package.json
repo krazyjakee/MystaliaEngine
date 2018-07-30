@@ -26,24 +26,24 @@
   },
   "homepage": "https://github.com/krazyjakee/MystaliaEngine",
   "dependencies": {
-    "body-parser": "latest",
-    "crypto2": "latest",
-    "express": "latest",
-    "extend": "latest",
-    "fs-extra": "^5.0.0",
-    "locallydb": "latest",
-    "md5": "latest",
-    "nodemon": "latest",
-    "socket.io": "latest"
+    "body-parser": "^1.18.3",
+    "crypto2": "^2.0.0",
+    "express": "^4.16.3",
+    "extend": "^3.0.2",
+    "fs-extra": "^7.0.0",
+    "locallydb": "0.0.9",
+    "md5": "^2.2.1",
+    "nodemon": "^1.18.3",
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/node": "^7.0.0-beta.46",
-    "@babel/preset-env": "^7.0.0-beta.46",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0"
+    "@babel/core": "^7.0.0-beta.55",
+    "@babel/node": "^7.0.0-beta.55",
+    "@babel/preset-env": "^7.0.0-beta.55",
+    "eslint": "^5.2.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0"
   }
 }

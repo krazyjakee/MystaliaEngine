@@ -18,30 +18,42 @@ class Hero extends Character {
 
 		if (a) {
       if(!w && !s){
-      	this.sprite.animations.play('left');
+      	if (this.sprite.animations) {
+          this.sprite.animations.play('left');
+        }
       	this.direction = 'left';
       }
-      if(this.checkCollide(-2, 0)){ return; }
-      this.sprite.x -= 2;
+      if(!this.checkCollide(-2, 0)){
+        this.sprite.x -= 2;
+      }
     } else if (d) {
       if(!w && !s){
-	      this.sprite.animations.play('right');
+	      if (this.sprite.animations) {
+          this.sprite.animations.play('right');
+        }
 	      this.direction = 'right';
 	    }
-      if(this.checkCollide(2, 0)){ return; }
-      this.sprite.x += 2;
+      if(!this.checkCollide(2, 0)){
+        this.sprite.x += 2;
+      }
     }
 
     if (w) {
-      this.sprite.animations.play('up');
+      if (this.sprite.animations) {
+        this.sprite.animations.play('up');
+      }
       this.direction = 'up';
-      if(this.checkCollide(0, -2)){ return; }
-      this.sprite.y -= 2;
+      if(!this.checkCollide(0, -2) && this.sprite){
+        this.sprite.y -= 2;
+      }
     } else if (s) {
-      this.sprite.animations.play('down');
+      if (this.sprite.animations) {
+        this.sprite.animations.play('down');
+      }
       this.direction = 'down';
-      if(this.checkCollide(0, 2)){ return; }
-      this.sprite.y += 2;
+      if(!this.checkCollide(0, 2) && this.sprite){
+        this.sprite.y += 2;
+      }
     }
 	}
 
